@@ -1,0 +1,32 @@
+{
+  "total_points": 100,
+  "dimensions": [
+    {"id": "mission_topology", "name": "Mission Topology And Ownership", "points": 10, "anchors": {"0-3": "Role names only", "4-6": "Major roles exist but responsibility boundaries are vague", "7-8": "Controller/chair, owners, and specialists are separated", "9-10": "Ownership, escalation, approval authority, and fallback owner are clear"}},
+    {"id": "dynamic_tool_discovery", "name": "Dynamic Tool Discovery And Routing", "points": 12, "anchors": {"0-3": "Assumes only fixed tools", "4-6": "Mentions tool categories but weak discovery/scoring", "7-9": "Tool registry, capability matching, and fallback exist", "10-12": "Runtime discovery, scoring, permission-aware routing, unavailable-tool fallback, and result provenance exist"}},
+    {"id": "hook_lifecycle", "name": "Hook Lifecycle And Automation Architecture", "points": 8, "anchors": {"0-2": "No hooks", "3-5": "Some pre/post hooks", "6-7": "Preflight, post-run, eval, and logging hooks", "8": "Hook schema, trigger, failure handling, idempotency, and rollback behavior"}},
+    {"id": "context_engineering", "name": "Context Engineering And Memory", "points": 14, "anchors": {"0-4": "Vague memory mention", "5-8": "Session/project/domain memory distinction", "9-11": "Retrieval, compression, stale-context detection, provenance, and handoff packet", "12-14": "Promotion/demotion, redaction, conflict resolution, context budget, and source trust ranking"}},
+    {"id": "workflow_state_machine", "name": "Workflow State Machine And Handoffs", "points": 12, "anchors": {"0-3": "Sequence only", "4-7": "Stage handoffs exist", "8-10": "Explicit state machine, transitions, blockers, retry/fallback", "11-12": "Handoff packet schema, return contract, evidence requirements, and loop termination criteria"}},
+    {"id": "domain_depth", "name": "Domain-Specific Depth", "points": 10, "anchors": {"0-3": "Generic", "4-6": "Some domain roles/data", "7-8": "Domain edge cases, constraints, and KPIs", "9-10": "Operational domain risks, workflows, compliance, and failure modes"}},
+    {"id": "governance_safety", "name": "Governance, Safety, And Human Approval", "points": 12, "anchors": {"0-3": "Safety mention only", "4-6": "Some approval gates", "7-9": "Policy owner, high-risk gate, and audit trail", "10-12": "Permission model, irreversible action approval, compliance review, adversarial defense, and safe-abort behavior"}},
+    {"id": "evals_tests", "name": "Evaluation, Smoke Tests, And Red-Team Tests", "points": 10, "anchors": {"0-3": "Abstract tests", "4-6": "Some smoke/eval content", "7-8": "Role evals, workflow evals, and red-team tests", "9-10": "First-day install tests, golden cases, adversarial cases, thresholds, and regression loop"}},
+    {"id": "observability_cost", "name": "Observability, Cost, And Operational Controls", "points": 8, "anchors": {"0-2": "Absent", "3-5": "Mentions logs/cost", "6-7": "Metrics, traces, cost budgets, and rate limits", "8": "Per-agent budgets, token/time caps, alerting, quota exhaustion fallback, and quality/cost policy"}},
+    {"id": "installability", "name": "Installability And Artifact Quality", "points": 4, "anchors": {"0-1": "Essay only", "2": "Folder structure", "3": "Config/schema/templates", "4": "Installable package spec, folder tree, manifest, and examples"}}
+  ],
+  "required_red_flags": [
+    "fixed tool list in the core prompt with no dynamic discovery",
+    "no memory/context engineering",
+    "no human approval gate",
+    "no permission/safety model for high-risk actions",
+    "no eval/smoke/red-team tests",
+    "no handoff return contract",
+    "ignores domain-specific constraints",
+    "org chart only, not installable package"
+  ],
+  "verdict_bands": [
+    {"min": 90, "max": 100, "verdict": "Production-grade meta-agent OS"},
+    {"min": 80, "max": 89, "verdict": "Strong, usable with minor gaps"},
+    {"min": 70, "max": 79, "verdict": "Promising but incomplete operating system"},
+    {"min": 60, "max": 69, "verdict": "Mostly conceptual, needs architecture work"},
+    {"min": 0, "max": 59, "verdict": "Not useful for serious meta-agent generation"}
+  ]
+}

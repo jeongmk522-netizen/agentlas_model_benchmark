@@ -1,0 +1,38 @@
+{
+  "runtime": "Upstage API",
+  "model": "solar-pro2",
+  "reviewed_at": "2026-06-01",
+  "summary": {
+    "average_score": 74.9,
+    "average_wall_time_seconds": 12.744,
+    "total_input_tokens": 2851,
+    "total_output_tokens": 19146,
+    "total_tokens": 21997,
+    "cost_type": "unavailable",
+    "red_flag_count": 0
+  },
+  "dimension_order": [
+    "mission_topology",
+    "dynamic_tool_discovery",
+    "hook_lifecycle",
+    "context_engineering",
+    "workflow_state_machine",
+    "domain_depth",
+    "governance_safety",
+    "evals_tests",
+    "observability_cost",
+    "installability"
+  ],
+  "scores": {
+    "P01": [7, 10, 5, 10, 8, 8, 9, 8, 7, 3],
+    "P02": [6, 10, 6, 10, 8, 9, 10, 8, 7, 3],
+    "P03": [7, 10, 6, 10, 9, 9, 10, 8, 7, 3],
+    "P04": [7, 10, 4, 9, 8, 8, 7, 8, 7, 3],
+    "P05": [7, 10, 2, 10, 8, 8, 8, 8, 8, 3],
+    "P06": [7, 9, 6, 9, 8, 8, 8, 8, 7, 3],
+    "P07": [7, 9, 3, 10, 6, 9, 10, 8, 7, 3],
+    "P08": [7, 8, 6, 9, 9, 9, 7, 8, 8, 4],
+    "P09": [8, 10, 6, 9, 9, 9, 10, 8, 6, 3],
+    "P10": [7, 10, 7, 10, 9, 7, 9, 8, 6, 4]
+  }
+}
