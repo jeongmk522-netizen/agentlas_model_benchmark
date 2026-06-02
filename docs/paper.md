@@ -4,75 +4,101 @@ Date: 2026-06-02
 
 ## Abstract
 
-This report evaluates whether model runtimes can produce installable Agentlas agent-team operating-system repositories for public domain workflows. The published aggregate uses nine public benchmark cases: investment research, AML investigation, disaster-response drones, film production, marketing, enterprise software delivery, hospital operations, supply chain, and SOC response. One non-public case is excluded from public aggregate outputs and replaced in the marketplace pack by an unscored vendor-risk/procurement workflow. Each runtime is judged on whether it can return an LLM-generated Agentlas draft, export a runnable repo structure, pass readiness checks, and satisfy a 100-point public rubric for tool routing, evidence memory, workflow governance, evals, observability, and domain safety.
+This report evaluates model runtimes on their ability to produce installable Agentlas agent-team packages for complex public workflows. The current public aggregate uses nine scored cases: investment research, AML/fraud investigation, disaster-response drones, film production, marketing, enterprise software delivery, hospital operations, supply-chain control, and SOC response.
 
-After increasing the per-case timeout to 900 seconds, the strongest quality tier was effectively tied on the public cases: Codex CLI `gpt-5.5`, Claude Code `claude-sonnet-4-6`, and Gemini CLI `gemini-3.1-pro-preview` each averaged 96/100. Upstage `solar-pro2` averaged 95.9/100, but was far faster in this harness. The earlier poor Claude/GPT result was a timeout artifact, not a model-quality finding. The local Antigravity CLI still returned no usable stdout and is treated as a harness-contract failure.
+The long-timeout result changes the interpretation of the benchmark. Earlier short-timeout runs made Claude and GPT appear weak, but the 900-second per-case run shows that the earlier result was a harness artifact. Claude Sonnet 4.6, GPT-5.5, and Gemini 3.1 Pro each average 96.0/100. Solar Pro 2 averages 95.9/100 while being much faster and cheaper by the proxy estimate.
 
 ## Research Question
 
-Can a model runtime produce an operational Agentlas agent-team package for complex public workflows, rather than a conceptual org chart or raw Markdown plan?
+Can a model runtime produce an operational Agentlas agent-team package for complex workflows, rather than a conceptual org chart or raw plan?
+
+## Public Dataset
+
+The published aggregate is based on:
+
+- 9 public workflow cases.
+- 6 runtime/model entries.
+- 54 prompt-level rows before excluding failed/non-LLM cases from quality charts.
+- 100-point reviewed rubric.
+- 900,000 ms per-case timeout.
+
+One non-public case is excluded from the scored public aggregate. The marketplace use-case pack includes a public-safe procurement workflow replacement for that slot.
 
 ## Method
 
-The benchmark ran the same public prompt catalog against each runtime. Every published case used the Agentlas public export path:
+Each runtime was evaluated against the same public prompt contract. The required output is an installable agent-team package with structured roles, tool and credential setup, memory/context handling, workflow handoffs, approval gates, tests, observability, and cost controls.
 
-```text
-fixed prompt
-  -> Agentlas draft-generation path
-  -> AgentDraft JSON
-  -> buildDraftRepo
-  -> ZIP encode/extract sandbox
-  -> readiness checks
-  -> raw automated score
-  -> reviewed aggregate score
-```
+The benchmark is not a general chat benchmark. It measures operational package generation under the Agentlas export path.
 
-The runner uses `generateTeamDraftWithAnswers(prompt, [], {})` so the benchmark respects the prompt instruction not to ask follow-up questions while still exercising the Agentlas answer-aware compact synthesis path. Upstage is not a native Agentlas provider, so it is wrapped as `AGENTLAS_LLM_CLI_COMMAND`; the wrapper reads stdin, calls Upstage, and prints a JSON object with a `text` field for Agentlas to unwrap. Antigravity is also wrapped, but the local CLI did not return stdout.
+Scoring dimensions:
+
+| Dimension | Points |
+|---|---:|
+| Request fit and domain depth | 15 |
+| Agentlas team structure | 15 |
+| Dynamic tools and credential setup | 15 |
+| Memory and context handling | 12 |
+| Workflow hooks and handoffs | 12 |
+| Runnable installability | 10 |
+| Governance and safety | 10 |
+| Observability and cost control | 11 |
+
+Failed LLM runs remain 0. A runtime that fails the stdout/consumption contract is treated as a runtime failure, not as direct evidence about the underlying model.
 
 ## Results
 
-| Runtime | Model | Cases | LLM draft success | Failures | Reviewed avg | Avg wall time | Estimated suite cost* |
-|---------|-------|------:|------------------:|---------:|-------------:|--------------:|----------------------:|
-| Codex CLI | `gpt-5.5` | 9 | 9 | 0 | 96.0 | 67.40s | $0.9718 |
-| Claude Code | `claude-sonnet-4-6` | 9 | 9 | 0 | 96.0 | 353.50s | $1.3289 |
-| Gemini CLI | `gemini-3.1-pro-preview` | 9 | 9 | 0 | 96.0 | 41.41s | $0.2040 |
-| Upstage custom CLI | `solar-pro2` | 9 | 9 | 0 | 95.9 | 9.79s | $0.0099 |
-| Gemini CLI | `gemini-3-flash-preview` | 9 | 9 | 0 | 94.1 | 65.78s | $0.0950 |
-| Antigravity CLI | `default` | 9 | 0 | 9 | 0.0 | 1.43s | n/a |
+| Runtime | Model | Cases | LLM success | Avg score | Avg wall time | Est. tokens | Est. suite cost* |
+|---|---|---:|---:|---:|---:|---:|---:|
+| Claude Code | `claude-sonnet-4-6` | 9 | 9 | 96.0 | 353.50s | 92,099 | $1.3289 |
+| Codex CLI | `gpt-5.5` | 9 | 9 | 96.0 | 67.40s | 42,142 | $0.9718 |
+| Gemini CLI | `gemini-3.1-pro-preview` | 9 | 9 | 96.0 | 41.41s | 26,753 | $0.2040 |
+| Upstage CLI | `solar-pro2` | 9 | 9 | 95.9 | 9.79s | 25,212 | $0.0099 |
+| Gemini CLI | `gemini-3-flash-preview` | 9 | 9 | 94.1 | 65.78s | 41,424 | $0.0950 |
+| Antigravity CLI | `default` | 9 | 0 | 0.0 | 1.43s | 0 | n/a |
 
-*Cost is a proxy estimate, not an invoice: Agentlas CLI providers recorded prompt and response character counts, so this report estimates tokens as chars/4 and applies public API list prices. The exact tokenizer and subscription billing behavior can differ.
+*Cost is a proxy estimate, not an invoice. The public table uses observed character-count usage divided by 4, then applies public API list prices.
 
-Prompt-level reviewed scores ranged from 93 to 98 for qualified LLM runs. The common remaining gap is not basic task understanding; it is deeper evidence of dynamic tool-discovery protocol, install-time credential paths, and explicit cost/observability proof inside the generated package.
+## Figure Interpretation
 
-## Runtime Findings
+### Quality vs Time
 
-Upstage `solar-pro2` was the fastest successful provider. It completed all public cases with LLM-generated drafts and scored 95.9/100 on average, just below the 96.0 quality leaders.
+`assets/agentlas_meta_score_time_zoom.png`
 
-Gemini CLI `gemini-3.1-pro-preview` matched the top 96.0 average and was the fastest among the three 96.0 providers. Gemini CLI `gemini-3-flash-preview` was stable, but averaged 94.1.
+Solar Pro 2 is the speed outlier. It remains within 0.1 points of the 96.0 quality leaders while averaging under 10 seconds per case.
 
-Codex CLI `gpt-5.5` completed all public cases after the timeout was raised. It tied the top reviewed average, but had higher estimated API cost than Gemini and Solar.
+### Quality vs Estimated Cost
 
-Claude Code `claude-sonnet-4-6` also completed all public cases under the long-timeout contract and tied the top reviewed average. Its main weakness in this run was wall-clock latency.
+`assets/agentlas_meta_score_cost_zoom.png`
 
-Antigravity failed the headless stdout contract. The local CLI appeared to hand off to an IDE surface rather than returning model text to stdout, so Agentlas could not consume it as an LLM provider.
+The quality leaders do not have similar cost profiles. Claude and GPT-5.5 match the highest score, but cost much more under the proxy estimate. Gemini 3.1 Pro is a stronger cost/quality compromise. Solar Pro 2 dominates on estimated cost.
 
-## Review Notes
+### Tokens, Cost, and Score
 
-The raw automated scorer initially over-triggered phrase-style red flags such as "creative role list without workflow" when the generated repo already contained workflow, approval, versioning, or domain-safety signals. The reviewed table applies one narrow correction: those phrase-style red flags are removed only when the score evidence already shows the required workflow/gate/domain signals. Failed LLM runs remain 0 even when Agentlas deterministic fallback created a usable local draft.
+`assets/agentlas_meta_tokens_cost_score.png`
+
+Token footprint separates the top-quality models. Gemini 3.1 Pro reaches 96.0 with a much smaller estimated token footprint than Claude and GPT-5.5. Solar Pro 2 has the lowest estimated token footprint among successful high-quality runs.
+
+## Findings
+
+1. **Timeout correction**: The previous weak Claude/GPT conclusion is not supported by the long-timeout run.
+2. **Quality cluster**: Claude Sonnet 4.6, GPT-5.5, and Gemini 3.1 Pro tie at 96.0; Solar Pro 2 is effectively tied at 95.9.
+3. **Efficiency split**: Solar Pro 2 is the clear speed/cost outlier. Gemini 3.1 Pro is the strongest balance among the 96.0 models.
+4. **Flash tradeoff**: Gemini 3 Flash completed all public cases, but its average score is lower at 94.1.
+5. **Runtime-contract failure**: Antigravity did not return consumable output in this setup. It is excluded from quality interpretation.
 
 ## Limitations
 
-This is a single-machine, single-date operational benchmark. CLI authentication state, local runtime versions, and provider rate limits may change results. The score is about public Agentlas agent-team repo generation, not general chat quality. The direct Upstage API baseline is retained separately because it did not exercise the Agentlas export path.
-
-The token and cost table is intentionally labeled as a proxy estimate. Exact API invoices require provider-native token accounting for each request and do not follow directly from CLI subscription logs.
+- Single-machine, single-date benchmark.
+- CLI authentication state, rate limits, and runtime versions can affect results.
+- Token and cost data are proxy estimates, not exact invoices.
+- The benchmark measures Agentlas package-generation performance, not general reasoning or chat quality.
+- One non-public case is excluded from the public aggregate.
 
 ## Artifacts
 
-- Reviewed aggregate: `data/evaluations/agentlas_meta_reviewed_scores.csv`
-- Reviewed summary: `data/evaluations/agentlas_meta_reviewed_summary.json`
-- Token/cost summary: `data/evaluations/agentlas_meta_token_cost_score.csv`
-- Zoomed charts: `assets/agentlas_meta_score_time_zoom.png`, `assets/agentlas_meta_score_cost_zoom.png`, `assets/agentlas_meta_tokens_cost_score.png`
-- Marketplace team use cases: `marketplace/agent-teams/`
-- Use-case selection report: `docs/marketplace-use-cases.md`
-- Upstage wrapper: `scripts/upstage_agentlas_cli.py`
-- Antigravity wrapper: `scripts/antigravity_agentlas_cli.py`
+- Reviewed summary: `data/evaluations/agentlas_meta_long_timeout_summary.csv`
+- Prompt-level scores: `data/evaluations/agentlas_meta_long_timeout_scores.csv`
+- Token/cost table: `data/evaluations/agentlas_meta_token_cost_score.csv`
+- Figures: `assets/agentlas_meta_score_time_zoom.png`, `assets/agentlas_meta_score_cost_zoom.png`, `assets/agentlas_meta_tokens_cost_score.png`
+- Methodology: `docs/methodology.md`
+- Marketplace public workflows: `docs/marketplace-use-cases.md`
