@@ -11,7 +11,7 @@
 <p align="center">
   <a href="https://github.com/jeongmk522-netizen/Agentlas_public_repo">Lab Hub</a>
   ·
-  <a href="https://github.com/jeongmk522-netizen/agent_agentlas_model_benchmark">agent_agentlas_model_benchmark</a>
+  <a href="https://github.com/jeongmk522-netizen/agentlas_model_benchmark">agentlas_model_benchmark</a>
 </p>
 
 # Agentlas Model Benchmark
@@ -24,17 +24,19 @@ Which model/runtime can produce an operational meta-agent OS instead of a role l
 
 This benchmark gives each runtime the same common prefix and 10 domain prompts. The output is scored on dynamic tool discovery, context engineering, workflow state machines, governance, tests, observability, and installable artifact quality.
 
-## Current Baseline
+## Main Result
 
-The first live run targets `Upstage API + solar-pro2`, because the benchmark seed explicitly requested Upstage/Solar and the account model list includes `solar-pro2`.
+The final run uses the real Agentlas meta-agent pipeline from the Agentlas app: compact meta-agent synthesis, Agentlas draft JSON, generated repo export, ZIP sandbox extraction, readiness checks, and reviewed score aggregation.
 
-| Runtime | Model | Status | Notes |
-|---------|-------|--------|-------|
-| Upstage API | `solar-pro2` | completed | Average score 74.9 across P01-P10; no required red flags. |
-| Claude Code | TBD | planned | Should be run through the CLI harness, not direct API, to preserve runtime effects. |
-| Codex CLI | TBD | planned | Should be run through the CLI harness. |
-| Gemini CLI | TBD | planned | Should be run through the CLI harness. |
-| Antigravity CLI | TBD | planned | Should be separated from pure API results. |
+| Runtime | Model | Cases | LLM draft success | Failures | Reviewed avg | Interpretation |
+|---------|-------|------:|------------------:|---------:|-------------:|----------------|
+| Upstage custom CLI | `solar-pro2` | 10 | 10 | 0 | 90.0 | Fastest successful Agentlas provider in this run. |
+| Gemini CLI | `gemini-3-flash-preview` | 10 | 10 | 0 | 90.0 | Same reviewed quality as Upstage, slower wall time. |
+| Codex CLI | `gpt-5.5` | 10 | 7 | 3 | 63.0 | Strong when it completed; unstable under the 180s per-case contract. |
+| Claude Code | `claude-sonnet-4-6` | 10 | 0 | 10 | 0.0 | Timed out in the Agentlas CLI provider path. |
+| Antigravity CLI | `default` | 10 | 0 | 10 | 0.0 | Local headless CLI returned no stdout, so Agentlas could not consume it. |
+
+The earlier direct Upstage API baseline is retained as historical context, but it is not the headline comparison because it did not exercise the Agentlas meta-agent repo-generation path.
 
 ## Agent Contract
 
@@ -63,21 +65,35 @@ COMMON_PREFIX
   P10 meta-agent factory
 ```
 
-Each run is saved with this contract:
+Agentlas meta-agent runs are saved outside the public repo with this contract:
 
 ```text
-/tmp/test_agent/model_runs/<runtime>_<model>_<prompt_id>.md
-/tmp/test_agent/model_runs/<runtime>_<model>_<prompt_id>.log
-/tmp/test_agent/model_runs/<runtime>_<model>_<prompt_id>.usage.json
-/tmp/test_agent/model_runs/<runtime>_<model>_<prompt_id>.error.txt
+<raw-run-dir>/<runtime>_<model>_direct-draft/Pxx/
+  prompt.md
+  draft.json
+  export_paths.json
+  readiness.json
+  result.json
+  repo/
 ```
 
 ## Quick Start
 
 ```bash
+cd <agentlas-app>/app
+
+# Upstage via Agentlas custom CLI provider.
 export UPSTAGE_API_KEY="..."
-python3 scripts/run_benchmark.py --runtime upstage_api --model solar-pro2 --all
-python3 scripts/score_runs.py --runs-dir /tmp/test_agent/model_runs --out data/evaluations/upstage_solar_pro2_scores.csv
+npx tsx <benchmark-repo>/scripts/agentlas_meta_benchmark.ts \
+  --runtime upstage \
+  --model solar-pro2 \
+  --all \
+  --out-dir <raw-run-dir> \
+  --public-out-dir <benchmark-repo>/data/evaluations
+
+# Produce the reviewed aggregate table from raw automated summaries.
+cd <benchmark-repo>
+python3 scripts/review_agentlas_meta_scores.py
 ```
 
 The runner only reads the key from the environment. Do not place provider keys in this repository.
@@ -85,6 +101,7 @@ The runner only reads the key from the environment. Do not place provider keys i
 ## Research Outputs
 
 - [docs/methodology.md](docs/methodology.md): benchmark design, metadata, and scoring method.
+- [docs/paper.md](docs/paper.md): paper-style report and interpretation.
 - [docs/upstage-solar-pro2-baseline.md](docs/upstage-solar-pro2-baseline.md): first Upstage/Solar baseline report.
 - [benchmark/prompts.json](benchmark/prompts.json): common prefix, 10 prompts, and red flags.
 - [benchmark/rubric.json](benchmark/rubric.json): 100-point rubric.
@@ -95,6 +112,10 @@ The runner only reads the key from the environment. Do not place provider keys i
 - [agent.md](agent.md): benchmark chair contract.
 - [agents/](agents/): visible role hierarchy for running and reviewing the benchmark.
 - [skills/](skills/): reusable benchmark skills.
+- [scripts/agentlas_meta_benchmark.ts](scripts/agentlas_meta_benchmark.ts): Agentlas meta-agent runner.
+- [scripts/upstage_agentlas_cli.py](scripts/upstage_agentlas_cli.py): Upstage custom CLI provider wrapper for Agentlas.
+- [scripts/antigravity_agentlas_cli.py](scripts/antigravity_agentlas_cli.py): Antigravity wrapper used to record stdout-contract failures.
+- [scripts/review_agentlas_meta_scores.py](scripts/review_agentlas_meta_scores.py): reviewed aggregate score builder.
 - [scripts/run_benchmark.py](scripts/run_benchmark.py): public-safe API/CLI runner scaffold.
 - [scripts/score_runs.py](scripts/score_runs.py): rubric-aligned evidence extractor and draft scorer.
 - [CLAUDE.md](CLAUDE.md): Claude Code guide.

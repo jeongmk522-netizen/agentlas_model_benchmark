@@ -1,0 +1,51 @@
+runtime,model,prompt_id,domain,score100,raw_score100,verdict,raw_verdict,generated_by,wall_time_seconds,red_flags,review_corrections,error
+antigravity,default,P01,Investment,0,0,Failed,Failed: deterministic fallback,deterministic,1.226,,,Agentlas meta-agent returned deterministic fallback instead of an LLM-generated draft.
+antigravity,default,P02,AML,0,0,Failed,Failed: deterministic fallback,deterministic,1.297,,,Agentlas meta-agent returned deterministic fallback instead of an LLM-generated draft.
+antigravity,default,P03,Disaster response drones,0,0,Failed,Failed: deterministic fallback,deterministic,1.33,,,Agentlas meta-agent returned deterministic fallback instead of an LLM-generated draft.
+antigravity,default,P04,Film studio,0,0,Failed,Failed: deterministic fallback,deterministic,1.354,creative role list without workflow,,Agentlas meta-agent returned deterministic fallback instead of an LLM-generated draft.
+antigravity,default,P05,Marketing agency,0,0,Failed,Failed: deterministic fallback,deterministic,1.4,generic campaign plan without tool/data workflow,,Agentlas meta-agent returned deterministic fallback instead of an LLM-generated draft.
+antigravity,default,P06,Enterprise software,0,0,Failed,Failed: deterministic fallback,deterministic,1.577,code generation without governance and test/release gates,,Agentlas meta-agent returned deterministic fallback instead of an LLM-generated draft.
+antigravity,default,P07,Hospital operations,0,0,Failed,Failed: deterministic fallback,deterministic,1.551,,,Agentlas meta-agent returned deterministic fallback instead of an LLM-generated draft.
+antigravity,default,P08,Supply chain,0,0,Failed,Failed: deterministic fallback,deterministic,1.587,,,Agentlas meta-agent returned deterministic fallback instead of an LLM-generated draft.
+antigravity,default,P09,SOC,0,0,Failed,Failed: deterministic fallback,deterministic,1.57,,,Agentlas meta-agent returned deterministic fallback instead of an LLM-generated draft.
+antigravity,default,P10,Meta-agent factory,0,0,Failed,Failed: deterministic fallback,deterministic,2.041,fixed seed agent list as the core design,,Agentlas meta-agent returned deterministic fallback instead of an LLM-generated draft.
+claude,claude-sonnet-4-6,P01,Investment,0,0,Failed,Failed: deterministic fallback,deterministic,60.669,,,Agentlas meta-agent returned deterministic fallback instead of an LLM-generated draft.
+claude,claude-sonnet-4-6,P02,AML,0,0,Failed,Failed: deterministic fallback,deterministic,60.502,,,Agentlas meta-agent returned deterministic fallback instead of an LLM-generated draft.
+claude,claude-sonnet-4-6,P03,Disaster response drones,0,0,Failed,Failed: deterministic fallback,deterministic,60.607,,,Agentlas meta-agent returned deterministic fallback instead of an LLM-generated draft.
+claude,claude-sonnet-4-6,P04,Film studio,0,0,Failed,Failed: deterministic fallback,deterministic,60.771,creative role list without workflow,,Agentlas meta-agent returned deterministic fallback instead of an LLM-generated draft.
+claude,claude-sonnet-4-6,P05,Marketing agency,0,0,Failed,Failed: deterministic fallback,deterministic,60.617,generic campaign plan without tool/data workflow,,Agentlas meta-agent returned deterministic fallback instead of an LLM-generated draft.
+claude,claude-sonnet-4-6,P06,Enterprise software,0,0,Failed,Failed: deterministic fallback,deterministic,60.619,code generation without governance and test/release gates,,Agentlas meta-agent returned deterministic fallback instead of an LLM-generated draft.
+claude,claude-sonnet-4-6,P07,Hospital operations,0,0,Failed,Failed: deterministic fallback,deterministic,60.625,,,Agentlas meta-agent returned deterministic fallback instead of an LLM-generated draft.
+claude,claude-sonnet-4-6,P08,Supply chain,0,0,Failed,Failed: deterministic fallback,deterministic,60.608,,,Agentlas meta-agent returned deterministic fallback instead of an LLM-generated draft.
+claude,claude-sonnet-4-6,P09,SOC,0,0,Failed,Failed: deterministic fallback,deterministic,60.535,,,Agentlas meta-agent returned deterministic fallback instead of an LLM-generated draft.
+claude,claude-sonnet-4-6,P10,Meta-agent factory,0,0,Failed,Failed: deterministic fallback,deterministic,60.514,fixed seed agent list as the core design,,Agentlas meta-agent returned deterministic fallback instead of an LLM-generated draft.
+codex,gpt-5.5,P01,Investment,90,90,Production-grade candidate,Production-grade candidate,llm,96.454,,,
+codex,gpt-5.5,P02,AML,90,90,Production-grade candidate,Production-grade candidate,llm,98.562,,,
+codex,gpt-5.5,P03,Disaster response drones,90,90,Production-grade candidate,Production-grade candidate,llm,62.839,,,
+codex,gpt-5.5,P04,Film studio,90,80,Production-grade candidate,Not production-grade,llm,71.207,,creative role list without workflow,
+codex,gpt-5.5,P05,Marketing agency,0,0,Failed,Failed: deterministic fallback,deterministic,180.1,generic campaign plan without tool/data workflow,,Agentlas meta-agent returned deterministic fallback instead of an LLM-generated draft.
+codex,gpt-5.5,P06,Enterprise software,0,0,Failed,Failed: deterministic fallback,deterministic,69.656,code generation without governance and test/release gates,,Agentlas meta-agent returned deterministic fallback instead of an LLM-generated draft.
+codex,gpt-5.5,P07,Hospital operations,90,90,Production-grade candidate,Production-grade candidate,llm,56.711,,,
+codex,gpt-5.5,P08,Supply chain,0,0,Failed,Failed: deterministic fallback,deterministic,81.562,,,Agentlas meta-agent returned deterministic fallback instead of an LLM-generated draft.
+codex,gpt-5.5,P09,SOC,90,90,Production-grade candidate,Production-grade candidate,llm,92.062,,,
+codex,gpt-5.5,P10,Meta-agent factory,90,80,Production-grade candidate,Not production-grade,llm,50.141,,fixed seed agent list as the core design,
+gemini,gemini-3-flash-preview,P01,Investment,90,90,Production-grade candidate,Production-grade candidate,llm,81.399,,,
+gemini,gemini-3-flash-preview,P02,AML,90,90,Production-grade candidate,Production-grade candidate,llm,53.518,,,
+gemini,gemini-3-flash-preview,P03,Disaster response drones,90,90,Production-grade candidate,Production-grade candidate,llm,53.733,,,
+gemini,gemini-3-flash-preview,P04,Film studio,90,80,Production-grade candidate,Not production-grade,llm,75.555,,creative role list without workflow,
+gemini,gemini-3-flash-preview,P05,Marketing agency,90,80,Production-grade candidate,Not production-grade,llm,71.138,,generic campaign plan without tool/data workflow,
+gemini,gemini-3-flash-preview,P06,Enterprise software,90,80,Production-grade candidate,Not production-grade,llm,81.659,,code generation without governance and test/release gates,
+gemini,gemini-3-flash-preview,P07,Hospital operations,90,90,Production-grade candidate,Production-grade candidate,llm,44.486,,,
+gemini,gemini-3-flash-preview,P08,Supply chain,90,90,Production-grade candidate,Production-grade candidate,llm,34.622,,,
+gemini,gemini-3-flash-preview,P09,SOC,90,90,Production-grade candidate,Production-grade candidate,llm,95.893,,,
+gemini,gemini-3-flash-preview,P10,Meta-agent factory,90,80,Production-grade candidate,Not production-grade,llm,47.589,,fixed seed agent list as the core design,
+upstage,solar-pro2,P01,Investment,90,90,Production-grade candidate,Production-grade candidate,llm,11.058,,,
+upstage,solar-pro2,P02,AML,90,90,Production-grade candidate,Production-grade candidate,llm,10.92,,,
+upstage,solar-pro2,P03,Disaster response drones,90,90,Production-grade candidate,Production-grade candidate,llm,10.381,,,
+upstage,solar-pro2,P04,Film studio,90,80,Production-grade candidate,Not production-grade,llm,8.204,,creative role list without workflow,
+upstage,solar-pro2,P05,Marketing agency,90,80,Production-grade candidate,Not production-grade,llm,9.467,,generic campaign plan without tool/data workflow,
+upstage,solar-pro2,P06,Enterprise software,90,80,Production-grade candidate,Not production-grade,llm,8.403,,code generation without governance and test/release gates,
+upstage,solar-pro2,P07,Hospital operations,90,90,Production-grade candidate,Production-grade candidate,llm,9.877,,,
+upstage,solar-pro2,P08,Supply chain,90,90,Production-grade candidate,Production-grade candidate,llm,9.774,,,
+upstage,solar-pro2,P09,SOC,90,90,Production-grade candidate,Production-grade candidate,llm,9.999,,,
+upstage,solar-pro2,P10,Meta-agent factory,90,80,Production-grade candidate,Not production-grade,llm,4.864,,fixed seed agent list as the core design,

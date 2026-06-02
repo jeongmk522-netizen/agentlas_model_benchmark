@@ -12,6 +12,7 @@ import datetime as dt
 import json
 import os
 import re
+import shlex
 import subprocess
 import sys
 import time
@@ -96,17 +97,114 @@ def upstage_chat(model: str, prompt: str, temperature: float, max_tokens: int, t
         raise RuntimeError(f"Upstage HTTP {exc.code}: {detail[:1200]}") from exc
 
 
-def cli_run(command_template: str, prompt: str, timeout: int) -> dict[str, Any]:
+def cli_run(command_template: str, prompt: str, timeout: int, execution_dir: Path) -> dict[str, Any]:
     if "{prompt}" not in command_template:
         raise RuntimeError("CLI command template must contain {prompt}")
-    command = [part if part != "{prompt}" else prompt for part in command_template.split(" ")]
-    completed = subprocess.run(command, capture_output=True, text=True, timeout=timeout, check=False)
+    command = [part if part != "{prompt}" else prompt for part in shlex.split(command_template)]
+    execution_dir.mkdir(parents=True, exist_ok=True)
+    completed = subprocess.run(command, cwd=execution_dir, capture_output=True, text=True, timeout=timeout, check=False)
     if completed.returncode != 0:
         raise RuntimeError(f"CLI exited {completed.returncode}: {completed.stderr[:1200]}")
     return {
         "choices": [{"message": {"content": completed.stdout}}],
         "usage": None,
         "runtime_notes": {"stderr": completed.stderr[:2000]},
+    }
+
+
+def runtime_command(runtime: str, model: str, prompt: str, execution_dir: Path) -> tuple[list[str], str | None]:
+    """Return argv and stdin for known CLI runtimes."""
+    execution_dir.mkdir(parents=True, exist_ok=True)
+    if runtime == "claude_code":
+        return (
+            [
+                "claude",
+                "-p",
+                "--model",
+                model,
+                "--tools",
+                "",
+                "--permission-mode",
+                "dontAsk",
+                "--no-session-persistence",
+                "--output-format",
+                "text",
+            ],
+            prompt,
+        )
+    if runtime == "codex_cli":
+        return (
+            [
+                "codex",
+                "exec",
+                "--sandbox",
+                "read-only",
+                "--skip-git-repo-check",
+                "--ephemeral",
+                "--color",
+                "never",
+                "--config",
+                'model_reasoning_effort="low"',
+                "--model",
+                model,
+                "-",
+            ],
+            prompt,
+        )
+    if runtime == "gemini_cli":
+        return (
+            [
+                "gemini",
+                "--model",
+                model,
+                "--prompt",
+                prompt,
+                "--skip-trust",
+                "--approval-mode",
+                "plan",
+                "--output-format",
+                "text",
+            ],
+            None,
+        )
+    if runtime == "antigravity_cli":
+        return (
+            [
+                "/Applications/Antigravity IDE.app/Contents/Resources/app/bin/antigravity-ide",
+                "chat",
+                "-m",
+                "ask",
+                "--new-window",
+                prompt,
+            ],
+            None,
+        )
+    raise RuntimeError(f"Unsupported runtime: {runtime}")
+
+
+def known_cli_run(runtime: str, model: str, prompt: str, timeout: int, execution_dir: Path) -> dict[str, Any]:
+    command, stdin = runtime_command(runtime, model, prompt, execution_dir)
+    completed = subprocess.run(
+        command,
+        cwd=execution_dir,
+        input=stdin,
+        capture_output=True,
+        text=True,
+        timeout=timeout,
+        check=False,
+    )
+    if completed.returncode != 0:
+        raise RuntimeError(f"{runtime} exited {completed.returncode}: {completed.stderr[:1600] or completed.stdout[:1600]}")
+    content = completed.stdout.strip()
+    if not content:
+        raise RuntimeError(f"{runtime} returned no stdout; stderr={completed.stderr[:1600]}")
+    return {
+        "choices": [{"message": {"content": content}}],
+        "usage": None,
+        "runtime_notes": {
+            "stderr": completed.stderr[:2000],
+            "execution_dir": str(execution_dir),
+        },
     }
 
 
@@ -147,7 +245,9 @@ def run_one(args: argparse.Namespace, catalog: dict[str, Any], prompt: dict[str,
         elif args.runtime == "upstage_api":
             response = upstage_chat(args.model, full_prompt, args.temperature, args.max_tokens, args.timeout)
         elif args.runtime == "cli":
-            response = cli_run(args.command_template, full_prompt, args.timeout)
+            response = cli_run(args.command_template, full_prompt, args.timeout, args.execution_dir)
+        elif args.runtime in {"claude_code", "codex_cli", "gemini_cli", "antigravity_cli"}:
+            response = known_cli_run(args.runtime, args.model, full_prompt, args.timeout, args.execution_dir)
         else:
             raise RuntimeError(f"Unsupported runtime: {args.runtime}")
 
@@ -200,7 +300,7 @@ def run_one(args: argparse.Namespace, catalog: dict[str, Any], prompt: dict[str,
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Run meta-agent OS benchmark prompts.")
-    parser.add_argument("--runtime", required=True, choices=["upstage_api", "cli"])
+    parser.add_argument("--runtime", required=True, choices=["upstage_api", "cli", "claude_code", "codex_cli", "gemini_cli", "antigravity_cli"])
     parser.add_argument("--model", required=True)
     parser.add_argument("--prompt-id")
     parser.add_argument("--all", action="store_true")
@@ -210,6 +310,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--max-tokens", type=int, default=4096)
     parser.add_argument("--timeout", type=int, default=180)
     parser.add_argument("--command-template", default="")
+    parser.add_argument("--execution-dir", type=Path, default=Path("/tmp/test_agent/isolated/default"))
     parser.add_argument("--notes", default="")
     parser.add_argument("--dry-run", action="store_true")
     parser.add_argument("--continue-on-error", action="store_true")
