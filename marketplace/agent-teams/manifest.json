@@ -1,0 +1,208 @@
+{
+  "schema": "agentlas.marketplace.team-use-cases.v1",
+  "generatedAt": "2026-06-02T04:45:43+00:00",
+  "selectionRule": "highest score, shortest wall time as tie-breaker",
+  "totalTeams": 10,
+  "teams": [
+    {
+      "slug": "benchmark-small-fund-research-os",
+      "nameEn": "Small Fund Research OS",
+      "nameKo": "소형 펀드 리서치 OS",
+      "category": "finance",
+      "benchmark": {
+        "source": "agentlas-model-benchmark-long-timeout",
+        "promptId": "P01",
+        "promptName": "P01_INVESTMENT_FUND_AGENT",
+        "selectionRule": "highest score, shortest wall time as tie-breaker",
+        "selectedRuntime": "agentlas_codex",
+        "selectedModel": "gpt-5.5",
+        "score100": 96.0,
+        "wallTimeSeconds": 68.048
+      },
+      "publicFiles": {
+        "ko": "marketplace/agent-teams/benchmark-small-fund-research-os.json",
+        "en": "marketplace/agent-teams/benchmark-small-fund-research-os.en.json"
+      }
+    },
+    {
+      "slug": "benchmark-aml-fraud-investigation-team",
+      "nameEn": "AML & Fraud Investigation Team",
+      "nameKo": "AML·사기 조사 팀",
+      "category": "compliance",
+      "benchmark": {
+        "source": "agentlas-model-benchmark-long-timeout",
+        "promptId": "P02",
+        "promptName": "P02_AML_FRAUD_INVESTIGATION_AGENT",
+        "selectionRule": "highest score, shortest wall time as tie-breaker",
+        "selectedRuntime": "agentlas_gemini",
+        "selectedModel": "gemini-3.1-pro-preview",
+        "score100": 96.0,
+        "wallTimeSeconds": 38.574
+      },
+      "publicFiles": {
+        "ko": "marketplace/agent-teams/benchmark-aml-fraud-investigation-team.json",
+        "en": "marketplace/agent-teams/benchmark-aml-fraud-investigation-team.en.json"
+      }
+    },
+    {
+      "slug": "benchmark-disaster-drone-swarm-command",
+      "nameEn": "Disaster Drone Swarm Command",
+      "nameKo": "재난 드론 군집 지휘팀",
+      "category": "emergency",
+      "benchmark": {
+        "source": "agentlas-model-benchmark-long-timeout",
+        "promptId": "P03",
+        "promptName": "P03_DISASTER_DRONE_SWARM_AGENT",
+        "selectionRule": "highest score, shortest wall time as tie-breaker",
+        "selectedRuntime": "agentlas_upstage",
+        "selectedModel": "solar-pro2",
+        "score100": 98.0,
+        "wallTimeSeconds": 10.381
+      },
+      "publicFiles": {
+        "ko": "marketplace/agent-teams/benchmark-disaster-drone-swarm-command.json",
+        "en": "marketplace/agent-teams/benchmark-disaster-drone-swarm-command.en.json"
+      }
+    },
+    {
+      "slug": "benchmark-film-studio-production-os",
+      "nameEn": "Film Studio Production OS",
+      "nameKo": "영화 제작 스튜디오 OS",
+      "category": "creative",
+      "benchmark": {
+        "source": "agentlas-model-benchmark-long-timeout",
+        "promptId": "P04",
+        "promptName": "P04_FILM_STUDIO_AGENT",
+        "selectionRule": "highest score, shortest wall time as tie-breaker",
+        "selectedRuntime": "agentlas_upstage",
+        "selectedModel": "solar-pro2",
+        "score100": 96.0,
+        "wallTimeSeconds": 8.204
+      },
+      "publicFiles": {
+        "ko": "marketplace/agent-teams/benchmark-film-studio-production-os.json",
+        "en": "marketplace/agent-teams/benchmark-film-studio-production-os.en.json"
+      }
+    },
+    {
+      "slug": "benchmark-ai-marketing-agency-hq",
+      "nameEn": "AI Marketing Agency HQ",
+      "nameKo": "AI 마케팅 에이전시 HQ",
+      "category": "marketing",
+      "benchmark": {
+        "source": "agentlas-model-benchmark-long-timeout",
+        "promptId": "P05",
+        "promptName": "P05_MARKETING_AGENCY_AGENT",
+        "selectionRule": "highest score, shortest wall time as tie-breaker",
+        "selectedRuntime": "agentlas_upstage",
+        "selectedModel": "solar-pro2",
+        "score100": 96.0,
+        "wallTimeSeconds": 9.467
+      },
+      "publicFiles": {
+        "ko": "marketplace/agent-teams/benchmark-ai-marketing-agency-hq.json",
+        "en": "marketplace/agent-teams/benchmark-ai-marketing-agency-hq.en.json"
+      }
+    },
+    {
+      "slug": "benchmark-enterprise-software-delivery-hq",
+      "nameEn": "Enterprise Software Delivery HQ",
+      "nameKo": "엔터프라이즈 소프트웨어 딜리버리 HQ",
+      "category": "software",
+      "benchmark": {
+        "source": "agentlas-model-benchmark-long-timeout",
+        "promptId": "P06",
+        "promptName": "P06_ENTERPRISE_SOFTWARE_HQ_AGENT",
+        "selectionRule": "highest score, shortest wall time as tie-breaker",
+        "selectedRuntime": "agentlas_upstage",
+        "selectedModel": "solar-pro2",
+        "score100": 96.0,
+        "wallTimeSeconds": 8.403
+      },
+      "publicFiles": {
+        "ko": "marketplace/agent-teams/benchmark-enterprise-software-delivery-hq.json",
+        "en": "marketplace/agent-teams/benchmark-enterprise-software-delivery-hq.en.json"
+      }
+    },
+    {
+      "slug": "benchmark-hospital-operations-command-center",
+      "nameEn": "Hospital Operations Command Center",
+      "nameKo": "병원 운영 커맨드 센터",
+      "category": "healthcare",
+      "benchmark": {
+        "source": "agentlas-model-benchmark-long-timeout",
+        "promptId": "P07",
+        "promptName": "P07_HOSPITAL_OPERATIONS_AGENT",
+        "selectionRule": "highest score, shortest wall time as tie-breaker",
+        "selectedRuntime": "agentlas_upstage",
+        "selectedModel": "solar-pro2",
+        "score100": 96.0,
+        "wallTimeSeconds": 9.877
+      },
+      "publicFiles": {
+        "ko": "marketplace/agent-teams/benchmark-hospital-operations-command-center.json",
+        "en": "marketplace/agent-teams/benchmark-hospital-operations-command-center.en.json"
+      }
+    },
+    {
+      "slug": "benchmark-supply-chain-control-tower",
+      "nameEn": "Supply Chain Control Tower",
+      "nameKo": "공급망 컨트롤 타워",
+      "category": "supply_chain",
+      "benchmark": {
+        "source": "agentlas-model-benchmark-long-timeout",
+        "promptId": "P08",
+        "promptName": "P08_SUPPLY_CHAIN_CONTROL_TOWER_AGENT",
+        "selectionRule": "highest score, shortest wall time as tie-breaker",
+        "selectedRuntime": "agentlas_upstage",
+        "selectedModel": "solar-pro2",
+        "score100": 96.0,
+        "wallTimeSeconds": 9.774
+      },
+      "publicFiles": {
+        "ko": "marketplace/agent-teams/benchmark-supply-chain-control-tower.json",
+        "en": "marketplace/agent-teams/benchmark-supply-chain-control-tower.en.json"
+      }
+    },
+    {
+      "slug": "benchmark-soc-threat-response-hq",
+      "nameEn": "SOC Threat Response HQ",
+      "nameKo": "SOC 위협 대응 HQ",
+      "category": "security",
+      "benchmark": {
+        "source": "agentlas-model-benchmark-long-timeout",
+        "promptId": "P09",
+        "promptName": "P09_SOC_THREAT_RESPONSE_AGENT",
+        "selectionRule": "highest score, shortest wall time as tie-breaker",
+        "selectedRuntime": "agentlas_upstage",
+        "selectedModel": "solar-pro2",
+        "score100": 95.0,
+        "wallTimeSeconds": 9.999
+      },
+      "publicFiles": {
+        "ko": "marketplace/agent-teams/benchmark-soc-threat-response-hq.json",
+        "en": "marketplace/agent-teams/benchmark-soc-threat-response-hq.en.json"
+      }
+    },
+    {
+      "slug": "benchmark-vendor-risk-procurement-desk",
+      "nameEn": "Vendor Risk & Procurement Review Desk",
+      "nameKo": "벤더 리스크·조달 검토 데스크",
+      "category": "compliance",
+      "benchmark": {
+        "source": "curated-public-replacement",
+        "promptId": "S10",
+        "promptName": "S10_VENDOR_RISK_PROCUREMENT_DESK",
+        "selectionRule": "public-safe replacement for a non-public case",
+        "selectedRuntime": "public_curated",
+        "selectedModel": "public-safe-template",
+        "score100": null,
+        "wallTimeSeconds": null
+      },
+      "publicFiles": {
+        "ko": "marketplace/agent-teams/benchmark-vendor-risk-procurement-desk.json",
+        "en": "marketplace/agent-teams/benchmark-vendor-risk-procurement-desk.en.json"
+      }
+    }
+  ]
+}

@@ -1,0 +1,158 @@
+{
+  "name": "소형 펀드 리서치 OS",
+  "tagline": "시장 데이터, 공시, 뉴스, 포트폴리오 한도, 애널리스트 메모를 한 팀으로 묶어 승인 가능한 투자 리서치 패킷을 만듭니다.",
+  "category": "finance",
+  "orchestrator": {
+    "role": "투자위원회 HQ",
+    "job": "리서치 요청을 데이터 수집, 기업/매크로 분석, 리스크 검증, 포트폴리오 제안, 컴플라이언스 리뷰로 라우팅한다. 주문 실행은 항상 사용자 승인 전까지 차단한다."
+  },
+  "agents": [
+    {
+      "role": "시장·공시 수집관",
+      "job": "가격, 공시, 뉴스, 매크로 지표, 실적 캘린더를 수집하고 오래된 근거를 표시한다.",
+      "skills": [
+        "market-data-ingest",
+        "filing-normalizer",
+        "stale-evidence-check"
+      ],
+      "modelTier": "cheap",
+      "externalApis": [
+        "Market data API",
+        "SEC/EDGAR or DART",
+        "News API"
+      ],
+      "deliverables": [
+        "근거 스냅샷",
+        "누락 데이터 목록"
+      ]
+    },
+    {
+      "role": "기업 리서치 애널리스트",
+      "job": "기업별 실적, 밸류에이션, 촉매, 리스크를 정리하고 투자 논리를 작성한다.",
+      "skills": [
+        "fundamental-analysis",
+        "thesis-writing",
+        "source-citation"
+      ],
+      "modelTier": "premium",
+      "externalApis": [
+        "Filings API",
+        "Financial data API"
+      ],
+      "deliverables": [
+        "종목별 투자 논리",
+        "근거 표"
+      ]
+    },
+    {
+      "role": "매크로·섹터 애널리스트",
+      "job": "거시 지표와 섹터 흐름이 포트폴리오에 주는 영향을 평가한다.",
+      "skills": [
+        "macro-briefing",
+        "sector-map",
+        "scenario-analysis"
+      ],
+      "modelTier": "standard",
+      "externalApis": [
+        "Economic calendar",
+        "Rates/Fx data"
+      ],
+      "deliverables": [
+        "매크로 브리프",
+        "섹터 위험 신호"
+      ]
+    },
+    {
+      "role": "리스크·반론 검증관",
+      "job": "투자 논리를 반대로 검증하고 집중도, 유동성, 손실 한도를 점검한다.",
+      "skills": [
+        "bear-case-review",
+        "risk-budget-check",
+        "contradiction-check"
+      ],
+      "modelTier": "premium",
+      "externalApis": [
+        "Portfolio holdings API"
+      ],
+      "deliverables": [
+        "반론 리포트",
+        "위험 한도 판정"
+      ]
+    },
+    {
+      "role": "포트폴리오 제안 매니저",
+      "job": "승인 가능한 리밸런싱 제안을 만들되 주문 실행은 하지 않는다.",
+      "skills": [
+        "rebalance-planning",
+        "approval-packaging",
+        "backtest-summary"
+      ],
+      "modelTier": "standard",
+      "externalApis": [
+        "Portfolio holdings API"
+      ],
+      "deliverables": [
+        "승인 대기 리밸런싱안",
+        "백테스트 메모"
+      ]
+    }
+  ],
+  "edges": [
+    {
+      "from": "투자위원회 HQ",
+      "to": "시장·공시 수집관",
+      "handoff": "리서치 대상과 필요한 데이터 범위"
+    },
+    {
+      "from": "시장·공시 수집관",
+      "to": "기업 리서치 애널리스트",
+      "handoff": "출처가 붙은 기업 데이터"
+    },
+    {
+      "from": "시장·공시 수집관",
+      "to": "매크로·섹터 애널리스트",
+      "handoff": "거시·섹터 이벤트 큐"
+    },
+    {
+      "from": "기업 리서치 애널리스트",
+      "to": "리스크·반론 검증관",
+      "handoff": "투자 논리와 반대 근거"
+    },
+    {
+      "from": "리스크·반론 검증관",
+      "to": "포트폴리오 제안 매니저",
+      "handoff": "통과한 후보와 제한 조건"
+    }
+  ],
+  "reviewGates": [
+    "주문 실행 전 사용자 승인 필수",
+    "출처 없는 수치 사용 금지",
+    "데이터 지연·결측 시 실행안 차단",
+    "리스크 한도 위반 시 자동 반려"
+  ],
+  "costGuardrails": [
+    "수집·요약은 cheap 티어",
+    "투자 논리와 반론 검증만 premium 티어",
+    "동일 종목 신규 근거 없는 재분석 차단",
+    "일일 분석 종목 수 상한"
+  ],
+  "selfImprovement": "성과와 논리의 적중 여부를 메모리 레저에 남기고, 실패한 thesis 유형을 다음 리서치 체크리스트에 반영한다.",
+  "creditBand": "high",
+  "userSetup": [
+    "시장 데이터 키 연결",
+    "포트폴리오 보유/한도 입력",
+    "승인권자와 주문 금지 정책 설정",
+    "리포트 주기 선택"
+  ],
+  "slug": "benchmark-small-fund-research-os",
+  "benchmark": {
+    "source": "agentlas-model-benchmark-long-timeout",
+    "promptId": "P01",
+    "promptName": "P01_INVESTMENT_FUND_AGENT",
+    "selectionRule": "highest score, shortest wall time as tie-breaker",
+    "selectedRuntime": "agentlas_codex",
+    "selectedModel": "gpt-5.5",
+    "score100": 96.0,
+    "wallTimeSeconds": 68.048
+  }
+}

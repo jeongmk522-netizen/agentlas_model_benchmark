@@ -1,0 +1,139 @@
+{
+  "name": "엔터프라이즈 소프트웨어 딜리버리 HQ",
+  "tagline": "PRD, 아키텍처, 구현, 테스트, 보안, 릴리즈 게이트를 갖춘 소프트웨어 제작 본부입니다.",
+  "category": "software",
+  "orchestrator": {
+    "role": "제품·기술 HQ",
+    "job": "요구사항을 PRD-first 계획, 아키텍처, 구현, QA, 보안 리뷰, 릴리즈 의사결정으로 라우팅한다."
+  },
+  "agents": [
+    {
+      "role": "제품 플래너",
+      "job": "사용자 목표를 PRD, 인수 기준, 범위 경계로 바꿉니다.",
+      "skills": [
+        "product-planner",
+        "handoff-contract",
+        "quality-check"
+      ],
+      "modelTier": "standard",
+      "externalApis": [],
+      "deliverables": [
+        "사용자 목표를 PRD, 인수 기준, 범위 경계로 바꿉니다"
+      ]
+    },
+    {
+      "role": "시스템 아키텍트",
+      "job": "데이터 모델, API 계약, 통합 계획을 설계합니다.",
+      "skills": [
+        "system-architect",
+        "handoff-contract",
+        "quality-check"
+      ],
+      "modelTier": "premium",
+      "externalApis": [],
+      "deliverables": [
+        "데이터 모델, API 계약, 통합 계획을 설계합니다"
+      ]
+    },
+    {
+      "role": "구현 엔지니어",
+      "job": "범위가 잡힌 코드 변경과 마이그레이션 메모를 만듭니다.",
+      "skills": [
+        "implementation-engineer",
+        "handoff-contract",
+        "quality-check"
+      ],
+      "modelTier": "standard",
+      "externalApis": [],
+      "deliverables": [
+        "범위가 잡힌 코드 변경과 마이그레이션 메모를 만듭니다"
+      ]
+    },
+    {
+      "role": "QA·평가 엔지니어",
+      "job": "스모크, 회귀 테스트, 평가 프롬프트를 만듭니다.",
+      "skills": [
+        "qa-&-eval-engineer",
+        "handoff-contract",
+        "quality-check"
+      ],
+      "modelTier": "premium",
+      "externalApis": [],
+      "deliverables": [
+        "스모크, 회귀 테스트, 평가 프롬프트를 만듭니다"
+      ]
+    },
+    {
+      "role": "보안·릴리즈 게이트",
+      "job": "인증, 비밀, 권한, 배포 리스크를 검토합니다.",
+      "skills": [
+        "security-&-release-gate",
+        "handoff-contract",
+        "quality-check"
+      ],
+      "modelTier": "standard",
+      "externalApis": [],
+      "deliverables": [
+        "인증, 비밀, 권한, 배포 리스크를 검토합니다"
+      ]
+    }
+  ],
+  "edges": [
+    {
+      "from": "제품·기술 HQ",
+      "to": "제품 플래너",
+      "handoff": "목표와 입력 범위"
+    },
+    {
+      "from": "제품 플래너",
+      "to": "시스템 아키텍트",
+      "handoff": "1차 분석 결과"
+    },
+    {
+      "from": "시스템 아키텍트",
+      "to": "구현 엔지니어",
+      "handoff": "설계/제작 초안"
+    },
+    {
+      "from": "구현 엔지니어",
+      "to": "QA·평가 엔지니어",
+      "handoff": "검토 대상"
+    },
+    {
+      "from": "QA·평가 엔지니어",
+      "to": "보안·릴리즈 게이트",
+      "handoff": "승인된 패키지"
+    }
+  ],
+  "reviewGates": [
+    "외부 전송·삭제·결제·실행 전 사용자 승인",
+    "출처와 판단 근거 기록",
+    "개인정보·비밀값 출력 금지",
+    "실패 시 안전한 로컬 초안으로 대체"
+  ],
+  "costGuardrails": [
+    "수집·정리는 standard 이하",
+    "고난도 판단만 premium",
+    "동일 입력 반복 실행 차단",
+    "실패 재시도 횟수 제한"
+  ],
+  "selfImprovement": "실행 결과, 실패 원인, 사용자 수정 사항을 메모리 레저에 기록해 다음 체크리스트와 평가 기준을 갱신한다.",
+  "creditBand": "medium",
+  "userSetup": [
+    "레포와 배포 환경 연결",
+    "승인자와 릴리즈 기준 설정",
+    "테스트 명령 입력",
+    "보안 금지 패턴 설정"
+  ],
+  "slug": "benchmark-enterprise-software-delivery-hq",
+  "benchmark": {
+    "source": "agentlas-model-benchmark-long-timeout",
+    "promptId": "P06",
+    "promptName": "P06_ENTERPRISE_SOFTWARE_HQ_AGENT",
+    "selectionRule": "highest score, shortest wall time as tie-breaker",
+    "selectedRuntime": "agentlas_upstage",
+    "selectedModel": "solar-pro2",
+    "score100": 96.0,
+    "wallTimeSeconds": 8.403
+  }
+}

@@ -1,0 +1,139 @@
+{
+  "name": "Hospital Operations Command Center",
+  "tagline": "Coordinates scheduling, beds, staffing, patient flow, claims support, and clinical admin documents with privacy controls.",
+  "category": "healthcare",
+  "orchestrator": {
+    "role": "Hospital Operations HQ",
+    "job": "Detects operational bottlenecks and routes work across scheduling, resources, patient flow, claims, and documentation while minimizing PHI access."
+  },
+  "agents": [
+    {
+      "role": "Scheduling Coordinator",
+      "job": "Balances appointment slots, no-shows, and physician calendars.",
+      "skills": [
+        "scheduling-coordinator",
+        "handoff-contract",
+        "quality-check"
+      ],
+      "modelTier": "standard",
+      "externalApis": [],
+      "deliverables": [
+        "Balances appointment slots, no-shows, and physician calendars"
+      ]
+    },
+    {
+      "role": "Resource Planner",
+      "job": "Tracks beds, rooms, staff, and equipment constraints.",
+      "skills": [
+        "resource-planner",
+        "handoff-contract",
+        "quality-check"
+      ],
+      "modelTier": "premium",
+      "externalApis": [],
+      "deliverables": [
+        "Tracks beds, rooms, staff, and equipment constraints"
+      ]
+    },
+    {
+      "role": "Patient Flow Analyst",
+      "job": "Finds bottlenecks from intake to discharge.",
+      "skills": [
+        "patient-flow-analyst",
+        "handoff-contract",
+        "quality-check"
+      ],
+      "modelTier": "standard",
+      "externalApis": [],
+      "deliverables": [
+        "Finds bottlenecks from intake to discharge"
+      ]
+    },
+    {
+      "role": "Claims Support Analyst",
+      "job": "Prepares coding and claim-support evidence for review.",
+      "skills": [
+        "claims-support-analyst",
+        "handoff-contract",
+        "quality-check"
+      ],
+      "modelTier": "premium",
+      "externalApis": [],
+      "deliverables": [
+        "Prepares coding and claim-support evidence for review"
+      ]
+    },
+    {
+      "role": "Privacy & Clinical Admin Gate",
+      "job": "Checks PHI minimization, consent, and clinical note safety.",
+      "skills": [
+        "privacy-&-clinical-admin-gate",
+        "handoff-contract",
+        "quality-check"
+      ],
+      "modelTier": "standard",
+      "externalApis": [],
+      "deliverables": [
+        "Checks PHI minimization, consent, and clinical note safety"
+      ]
+    }
+  ],
+  "edges": [
+    {
+      "from": "Hospital Operations HQ",
+      "to": "Scheduling Coordinator",
+      "handoff": "Goal and input scope"
+    },
+    {
+      "from": "Scheduling Coordinator",
+      "to": "Resource Planner",
+      "handoff": "First-pass analysis"
+    },
+    {
+      "from": "Resource Planner",
+      "to": "Patient Flow Analyst",
+      "handoff": "Draft plan or asset"
+    },
+    {
+      "from": "Patient Flow Analyst",
+      "to": "Claims Support Analyst",
+      "handoff": "Review target"
+    },
+    {
+      "from": "Claims Support Analyst",
+      "to": "Privacy & Clinical Admin Gate",
+      "handoff": "Approved package"
+    }
+  ],
+  "reviewGates": [
+    "User approval before external send/delete/payment/execution",
+    "Record sources and rationale",
+    "Never print private data or secrets",
+    "Fall back to safe local drafts on failure"
+  ],
+  "costGuardrails": [
+    "Use standard or lower for collection and cleanup",
+    "Premium only for difficult judgment",
+    "Block repeated runs on same input",
+    "Cap retry count"
+  ],
+  "selfImprovement": "Logs run outcomes, failure causes, and user edits into a memory ledger, then updates checklists and eval criteria.",
+  "creditBand": "high",
+  "userSetup": [
+    "Connect scheduling/EMR read access",
+    "Enter PHI access policy",
+    "Choose operations KPIs",
+    "Assign clinical approver"
+  ],
+  "slug": "benchmark-hospital-operations-command-center",
+  "benchmark": {
+    "source": "agentlas-model-benchmark-long-timeout",
+    "promptId": "P07",
+    "promptName": "P07_HOSPITAL_OPERATIONS_AGENT",
+    "selectionRule": "highest score, shortest wall time as tie-breaker",
+    "selectedRuntime": "agentlas_upstage",
+    "selectedModel": "solar-pro2",
+    "score100": 96.0,
+    "wallTimeSeconds": 9.877
+  }
+}

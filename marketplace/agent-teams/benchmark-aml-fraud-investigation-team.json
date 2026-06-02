@@ -1,0 +1,154 @@
+{
+  "name": "AML·사기 조사 팀",
+  "tagline": "경보 triage부터 증거 체인, 제재·PEP 확인, 감사 제출 리포트까지 한 번에 정리하는 조사 운영팀입니다.",
+  "category": "compliance",
+  "orchestrator": {
+    "role": "조사 지휘 HQ",
+    "job": "경보 우선순위를 정하고 KYC, 거래 패턴, 제재 리스트, 증거 보존, 리포트 작성 단계를 라우팅한다. 고객 조치나 신고는 승인 게이트를 통과해야 한다."
+  },
+  "agents": [
+    {
+      "role": "경보 트리아지",
+      "job": "거래 경보를 위험도와 긴급도별로 분류한다.",
+      "skills": [
+        "alert-triage",
+        "case-priority",
+        "false-positive-filter"
+      ],
+      "modelTier": "cheap",
+      "externalApis": [
+        "Transaction monitoring system"
+      ],
+      "deliverables": [
+        "경보 우선순위",
+        "초기 사건 요약"
+      ]
+    },
+    {
+      "role": "KYC·계정 분석관",
+      "job": "고객 프로필, beneficial owner, 과거 검증 기록을 확인한다.",
+      "skills": [
+        "kyc-review",
+        "entity-resolution",
+        "profile-drift"
+      ],
+      "modelTier": "standard",
+      "externalApis": [
+        "KYC provider",
+        "CRM"
+      ],
+      "deliverables": [
+        "KYC 차이점",
+        "위험 프로필"
+      ]
+    },
+    {
+      "role": "거래 패턴 분석관",
+      "job": "거래 네트워크, 분할 송금, 이상 패턴을 탐지한다.",
+      "skills": [
+        "graph-analysis",
+        "velocity-check",
+        "pattern-mining"
+      ],
+      "modelTier": "premium",
+      "externalApis": [
+        "Transaction graph DB"
+      ],
+      "deliverables": [
+        "패턴 분석",
+        "연결 계정 지도"
+      ]
+    },
+    {
+      "role": "제재·PEP 검증관",
+      "job": "제재, PEP, adverse media 결과를 증거와 함께 검증한다.",
+      "skills": [
+        "sanctions-screen",
+        "pep-check",
+        "adverse-media-review"
+      ],
+      "modelTier": "premium",
+      "externalApis": [
+        "Sanctions API",
+        "Web search"
+      ],
+      "deliverables": [
+        "제재 검증 표",
+        "근거 링크"
+      ]
+    },
+    {
+      "role": "감사 리포트 작성관",
+      "job": "증거 체인과 의사결정 로그를 감사 가능한 문서로 만든다.",
+      "skills": [
+        "chain-of-custody",
+        "sar-draft",
+        "audit-reporting"
+      ],
+      "modelTier": "standard",
+      "externalApis": [],
+      "deliverables": [
+        "조사 리포트",
+        "승인 대기 조치안"
+      ]
+    }
+  ],
+  "edges": [
+    {
+      "from": "조사 지휘 HQ",
+      "to": "경보 트리아지",
+      "handoff": "신규 경보와 정책 범위"
+    },
+    {
+      "from": "경보 트리아지",
+      "to": "KYC·계정 분석관",
+      "handoff": "우선 사건과 관련 고객"
+    },
+    {
+      "from": "KYC·계정 분석관",
+      "to": "거래 패턴 분석관",
+      "handoff": "계정·관계자 컨텍스트"
+    },
+    {
+      "from": "거래 패턴 분석관",
+      "to": "제재·PEP 검증관",
+      "handoff": "고위험 엔티티"
+    },
+    {
+      "from": "제재·PEP 검증관",
+      "to": "감사 리포트 작성관",
+      "handoff": "검증 결과와 증거"
+    }
+  ],
+  "reviewGates": [
+    "고객 계정 동결·신고 전 준법 승인",
+    "증거 출처와 조회 시각 기록 필수",
+    "PII 최소 공개",
+    "모델 추정만으로 혐의 확정 금지"
+  ],
+  "costGuardrails": [
+    "대량 경보 분류는 cheap 티어",
+    "그래프·제재 검증만 premium",
+    "중복 사건 병합",
+    "낮은 위험 경보는 배치 처리"
+  ],
+  "selfImprovement": "오탐/정탐 결과를 사건 유형별로 기록해 경보 우선순위와 false-positive 필터를 조정한다.",
+  "creditBand": "high",
+  "userSetup": [
+    "거래 모니터링 시스템 연결",
+    "KYC/제재 API 키 입력",
+    "승인권자와 신고 기준 설정",
+    "PII 보존 정책 확인"
+  ],
+  "slug": "benchmark-aml-fraud-investigation-team",
+  "benchmark": {
+    "source": "agentlas-model-benchmark-long-timeout",
+    "promptId": "P02",
+    "promptName": "P02_AML_FRAUD_INVESTIGATION_AGENT",
+    "selectionRule": "highest score, shortest wall time as tie-breaker",
+    "selectedRuntime": "agentlas_gemini",
+    "selectedModel": "gemini-3.1-pro-preview",
+    "score100": 96.0,
+    "wallTimeSeconds": 38.574
+  }
+}

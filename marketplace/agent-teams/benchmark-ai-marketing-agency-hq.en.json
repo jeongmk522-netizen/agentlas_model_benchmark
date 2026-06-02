@@ -1,0 +1,139 @@
+{
+  "name": "AI Marketing Agency HQ",
+  "tagline": "Runs competitor research, campaign strategy, creative production, Playwright QA, and performance analysis as one agency team.",
+  "category": "marketing",
+  "orchestrator": {
+    "role": "Campaign Director HQ",
+    "job": "Routes brand goals and channel constraints into research, creative, landing-page QA, and measurement work."
+  },
+  "agents": [
+    {
+      "role": "Market Researcher",
+      "job": "Finds competitors, positioning gaps, and current examples.",
+      "skills": [
+        "market-researcher",
+        "handoff-contract",
+        "quality-check"
+      ],
+      "modelTier": "standard",
+      "externalApis": [],
+      "deliverables": [
+        "Finds competitors, positioning gaps, and current examples"
+      ]
+    },
+    {
+      "role": "Strategy Planner",
+      "job": "Builds campaign angle, audience, channel, and offer plan.",
+      "skills": [
+        "strategy-planner",
+        "handoff-contract",
+        "quality-check"
+      ],
+      "modelTier": "premium",
+      "externalApis": [],
+      "deliverables": [
+        "Builds campaign angle, audience, channel, and offer plan"
+      ]
+    },
+    {
+      "role": "Copy & Creative Producer",
+      "job": "Creates hooks, captions, cards, and ad variants.",
+      "skills": [
+        "copy-&-creative-producer",
+        "handoff-contract",
+        "quality-check"
+      ],
+      "modelTier": "standard",
+      "externalApis": [],
+      "deliverables": [
+        "Creates hooks, captions, cards, and ad variants"
+      ]
+    },
+    {
+      "role": "Landing QA Analyst",
+      "job": "Uses browser checks to review landing pages and funnels.",
+      "skills": [
+        "landing-qa-analyst",
+        "handoff-contract",
+        "quality-check"
+      ],
+      "modelTier": "premium",
+      "externalApis": [],
+      "deliverables": [
+        "Uses browser checks to review landing pages and funnels"
+      ]
+    },
+    {
+      "role": "Performance Analyst",
+      "job": "Reads campaign data and proposes the next experiment.",
+      "skills": [
+        "performance-analyst",
+        "handoff-contract",
+        "quality-check"
+      ],
+      "modelTier": "standard",
+      "externalApis": [],
+      "deliverables": [
+        "Reads campaign data and proposes the next experiment"
+      ]
+    }
+  ],
+  "edges": [
+    {
+      "from": "Campaign Director HQ",
+      "to": "Market Researcher",
+      "handoff": "Goal and input scope"
+    },
+    {
+      "from": "Market Researcher",
+      "to": "Strategy Planner",
+      "handoff": "First-pass analysis"
+    },
+    {
+      "from": "Strategy Planner",
+      "to": "Copy & Creative Producer",
+      "handoff": "Draft plan or asset"
+    },
+    {
+      "from": "Copy & Creative Producer",
+      "to": "Landing QA Analyst",
+      "handoff": "Review target"
+    },
+    {
+      "from": "Landing QA Analyst",
+      "to": "Performance Analyst",
+      "handoff": "Approved package"
+    }
+  ],
+  "reviewGates": [
+    "User approval before external send/delete/payment/execution",
+    "Record sources and rationale",
+    "Never print private data or secrets",
+    "Fall back to safe local drafts on failure"
+  ],
+  "costGuardrails": [
+    "Use standard or lower for collection and cleanup",
+    "Premium only for difficult judgment",
+    "Block repeated runs on same input",
+    "Cap retry count"
+  ],
+  "selfImprovement": "Logs run outcomes, failure causes, and user edits into a memory ledger, then updates checklists and eval criteria.",
+  "creditBand": "medium",
+  "userSetup": [
+    "Enter brand voice and banned terms",
+    "Choose competitors/channels",
+    "Connect read-only ad accounts",
+    "Assign publish approver"
+  ],
+  "slug": "benchmark-ai-marketing-agency-hq",
+  "benchmark": {
+    "source": "agentlas-model-benchmark-long-timeout",
+    "promptId": "P05",
+    "promptName": "P05_MARKETING_AGENCY_AGENT",
+    "selectionRule": "highest score, shortest wall time as tie-breaker",
+    "selectedRuntime": "agentlas_upstage",
+    "selectedModel": "solar-pro2",
+    "score100": 96.0,
+    "wallTimeSeconds": 9.467
+  }
+}

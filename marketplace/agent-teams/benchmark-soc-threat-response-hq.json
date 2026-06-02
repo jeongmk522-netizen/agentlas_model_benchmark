@@ -1,0 +1,139 @@
+{
+  "name": "SOC 위협 대응 HQ",
+  "tagline": "SIEM 경보, 로그, 위협 인텔, MITRE 매핑, 격리 승인, 사후 보고를 조율하는 보안 운영팀입니다.",
+  "category": "security",
+  "orchestrator": {
+    "role": "인시던트 커맨더 HQ",
+    "job": "경보를 분류하고 로그 조사, 위협 인텔, 탐지 규칙, 격리 계획, 보고서를 라우팅한다. 차단·격리는 승인 전 금지한다."
+  },
+  "agents": [
+    {
+      "role": "경보 트리아지 분석가",
+      "job": "심각도, 자산 중요도, 신뢰도로 경보를 정렬합니다.",
+      "skills": [
+        "alert-triage-analyst",
+        "handoff-contract",
+        "quality-check"
+      ],
+      "modelTier": "standard",
+      "externalApis": [],
+      "deliverables": [
+        "심각도, 자산 중요도, 신뢰도로 경보를 정렬합니다"
+      ]
+    },
+    {
+      "role": "로그 조사관",
+      "job": "로그를 조회해 타임라인과 범위를 재구성합니다.",
+      "skills": [
+        "log-investigator",
+        "handoff-contract",
+        "quality-check"
+      ],
+      "modelTier": "premium",
+      "externalApis": [],
+      "deliverables": [
+        "로그를 조회해 타임라인과 범위를 재구성합니다"
+      ]
+    },
+    {
+      "role": "위협 인텔 매퍼",
+      "job": "IOC를 MITRE 기술과 알려진 캠페인에 매핑합니다.",
+      "skills": [
+        "threat-intel-mapper",
+        "handoff-contract",
+        "quality-check"
+      ],
+      "modelTier": "standard",
+      "externalApis": [],
+      "deliverables": [
+        "IOC를 MITRE 기술과 알려진 캠페인에 매핑합니다"
+      ]
+    },
+    {
+      "role": "격리 계획관",
+      "job": "차단, 격리, 롤백 계획을 승인용으로 작성합니다.",
+      "skills": [
+        "containment-planner",
+        "handoff-contract",
+        "quality-check"
+      ],
+      "modelTier": "premium",
+      "externalApis": [],
+      "deliverables": [
+        "차단, 격리, 롤백 계획을 승인용으로 작성합니다"
+      ]
+    },
+    {
+      "role": "탐지 엔지니어",
+      "job": "탐지 규칙 업데이트와 회귀 점검을 작성합니다.",
+      "skills": [
+        "detection-engineer",
+        "handoff-contract",
+        "quality-check"
+      ],
+      "modelTier": "standard",
+      "externalApis": [],
+      "deliverables": [
+        "탐지 규칙 업데이트와 회귀 점검을 작성합니다"
+      ]
+    }
+  ],
+  "edges": [
+    {
+      "from": "인시던트 커맨더 HQ",
+      "to": "경보 트리아지 분석가",
+      "handoff": "목표와 입력 범위"
+    },
+    {
+      "from": "경보 트리아지 분석가",
+      "to": "로그 조사관",
+      "handoff": "1차 분석 결과"
+    },
+    {
+      "from": "로그 조사관",
+      "to": "위협 인텔 매퍼",
+      "handoff": "설계/제작 초안"
+    },
+    {
+      "from": "위협 인텔 매퍼",
+      "to": "격리 계획관",
+      "handoff": "검토 대상"
+    },
+    {
+      "from": "격리 계획관",
+      "to": "탐지 엔지니어",
+      "handoff": "승인된 패키지"
+    }
+  ],
+  "reviewGates": [
+    "외부 전송·삭제·결제·실행 전 사용자 승인",
+    "출처와 판단 근거 기록",
+    "개인정보·비밀값 출력 금지",
+    "실패 시 안전한 로컬 초안으로 대체"
+  ],
+  "costGuardrails": [
+    "수집·정리는 standard 이하",
+    "고난도 판단만 premium",
+    "동일 입력 반복 실행 차단",
+    "실패 재시도 횟수 제한"
+  ],
+  "selfImprovement": "실행 결과, 실패 원인, 사용자 수정 사항을 메모리 레저에 기록해 다음 체크리스트와 평가 기준을 갱신한다.",
+  "creditBand": "high",
+  "userSetup": [
+    "SIEM/로그 읽기 권한 연결",
+    "승인 가능한 격리 액션 정의",
+    "위협 인텔 소스 선택",
+    "사후 보고 템플릿 설정"
+  ],
+  "slug": "benchmark-soc-threat-response-hq",
+  "benchmark": {
+    "source": "agentlas-model-benchmark-long-timeout",
+    "promptId": "P09",
+    "promptName": "P09_SOC_THREAT_RESPONSE_AGENT",
+    "selectionRule": "highest score, shortest wall time as tie-breaker",
+    "selectedRuntime": "agentlas_upstage",
+    "selectedModel": "solar-pro2",
+    "score100": 95.0,
+    "wallTimeSeconds": 9.999
+  }
+}

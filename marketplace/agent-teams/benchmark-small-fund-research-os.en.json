@@ -1,0 +1,158 @@
+{
+  "name": "Small Fund Research OS",
+  "tagline": "Coordinates market data, filings, news, portfolio limits, and analyst notes into approval-ready investment research packets.",
+  "category": "finance",
+  "orchestrator": {
+    "role": "Investment Committee HQ",
+    "job": "Routes research requests through data intake, company and macro analysis, risk review, portfolio proposal, and compliance review. Blocks trade execution until explicit user approval."
+  },
+  "agents": [
+    {
+      "role": "Market & Filing Intake",
+      "job": "Collects prices, filings, news, macro indicators, and earnings calendars while flagging stale evidence.",
+      "skills": [
+        "market-data-ingest",
+        "filing-normalizer",
+        "stale-evidence-check"
+      ],
+      "modelTier": "cheap",
+      "externalApis": [
+        "Market data API",
+        "SEC/EDGAR or DART",
+        "News API"
+      ],
+      "deliverables": [
+        "Evidence snapshot",
+        "Missing data list"
+      ]
+    },
+    {
+      "role": "Company Research Analyst",
+      "job": "Summarizes company performance, valuation, catalysts, and risk into investment theses.",
+      "skills": [
+        "fundamental-analysis",
+        "thesis-writing",
+        "source-citation"
+      ],
+      "modelTier": "premium",
+      "externalApis": [
+        "Filings API",
+        "Financial data API"
+      ],
+      "deliverables": [
+        "Per-company thesis",
+        "Cited evidence table"
+      ]
+    },
+    {
+      "role": "Macro & Sector Analyst",
+      "job": "Assesses how macro indicators and sector flows affect the portfolio.",
+      "skills": [
+        "macro-briefing",
+        "sector-map",
+        "scenario-analysis"
+      ],
+      "modelTier": "standard",
+      "externalApis": [
+        "Economic calendar",
+        "Rates/Fx data"
+      ],
+      "deliverables": [
+        "Macro brief",
+        "Sector risk signals"
+      ]
+    },
+    {
+      "role": "Risk & Skeptic Reviewer",
+      "job": "Challenges the thesis and checks concentration, liquidity, and loss limits.",
+      "skills": [
+        "bear-case-review",
+        "risk-budget-check",
+        "contradiction-check"
+      ],
+      "modelTier": "premium",
+      "externalApis": [
+        "Portfolio holdings API"
+      ],
+      "deliverables": [
+        "Bear-case report",
+        "Risk-limit verdict"
+      ]
+    },
+    {
+      "role": "Portfolio Proposal Manager",
+      "job": "Builds approval-ready rebalance proposals but never submits trades.",
+      "skills": [
+        "rebalance-planning",
+        "approval-packaging",
+        "backtest-summary"
+      ],
+      "modelTier": "standard",
+      "externalApis": [
+        "Portfolio holdings API"
+      ],
+      "deliverables": [
+        "Pending rebalance proposal",
+        "Backtest memo"
+      ]
+    }
+  ],
+  "edges": [
+    {
+      "from": "Investment Committee HQ",
+      "to": "Market & Filing Intake",
+      "handoff": "Research target and required data scope"
+    },
+    {
+      "from": "Market & Filing Intake",
+      "to": "Company Research Analyst",
+      "handoff": "Cited company data"
+    },
+    {
+      "from": "Market & Filing Intake",
+      "to": "Macro & Sector Analyst",
+      "handoff": "Macro and sector event queue"
+    },
+    {
+      "from": "Company Research Analyst",
+      "to": "Risk & Skeptic Reviewer",
+      "handoff": "Thesis and bear case"
+    },
+    {
+      "from": "Risk & Skeptic Reviewer",
+      "to": "Portfolio Proposal Manager",
+      "handoff": "Approved candidates and constraints"
+    }
+  ],
+  "reviewGates": [
+    "Explicit user approval before any trade execution",
+    "No uncited financial claims",
+    "Block proposals when data is stale or missing",
+    "Reject risk-limit violations"
+  ],
+  "costGuardrails": [
+    "Cheap tier for intake and summaries",
+    "Premium only for thesis and adversarial review",
+    "No repeated stock analysis without new evidence",
+    "Daily cap on analyzed names"
+  ],
+  "selfImprovement": "Logs outcome quality and failed thesis patterns into a memory ledger, then updates the next research checklist.",
+  "creditBand": "high",
+  "userSetup": [
+    "Connect market data keys",
+    "Enter holdings and risk limits",
+    "Set approvers and no-trade policy",
+    "Choose report cadence"
+  ],
+  "slug": "benchmark-small-fund-research-os",
+  "benchmark": {
+    "source": "agentlas-model-benchmark-long-timeout",
+    "promptId": "P01",
+    "promptName": "P01_INVESTMENT_FUND_AGENT",
+    "selectionRule": "highest score, shortest wall time as tie-breaker",
+    "selectedRuntime": "agentlas_codex",
+    "selectedModel": "gpt-5.5",
+    "score100": 96.0,
+    "wallTimeSeconds": 68.048
+  }
+}

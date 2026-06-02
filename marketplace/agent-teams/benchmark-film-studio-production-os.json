@@ -1,0 +1,139 @@
+{
+  "name": "영화 제작 스튜디오 OS",
+  "tagline": "스토리 브리프를 대본, 콘티, 예산, 촬영 일정, 후반 작업 패키지로 나누어 제작 가능한 계획으로 바꿉니다.",
+  "category": "creative",
+  "orchestrator": {
+    "role": "프로듀서 HQ",
+    "job": "창작, 제작관리, 예산, 법무, 후반 작업을 순서대로 라우팅하고, 촬영·계약·송출 전 승인 게이트를 둔다."
+  },
+  "agents": [
+    {
+      "role": "스토리 개발자",
+      "job": "시놉시스를 비트시트, 캐릭터 아크, 대본 리스크로 확장합니다.",
+      "skills": [
+        "story-developer",
+        "handoff-contract",
+        "quality-check"
+      ],
+      "modelTier": "standard",
+      "externalApis": [],
+      "deliverables": [
+        "시놉시스를 비트시트, 캐릭터 아크, 대본 리스크로 확장합니다"
+      ]
+    },
+    {
+      "role": "콘티 디렉터",
+      "job": "장면을 샷 리스트와 시각 콘티로 변환합니다.",
+      "skills": [
+        "storyboard-director",
+        "handoff-contract",
+        "quality-check"
+      ],
+      "modelTier": "premium",
+      "externalApis": [],
+      "deliverables": [
+        "장면을 샷 리스트와 시각 콘티로 변환합니다"
+      ]
+    },
+    {
+      "role": "제작 스케줄러",
+      "job": "장소, 배우, 스태프, 촬영 일정을 구성합니다.",
+      "skills": [
+        "production-scheduler",
+        "handoff-contract",
+        "quality-check"
+      ],
+      "modelTier": "standard",
+      "externalApis": [],
+      "deliverables": [
+        "장소, 배우, 스태프, 촬영 일정을 구성합니다"
+      ]
+    },
+    {
+      "role": "예산·법무 리뷰어",
+      "job": "예산, 권리, 음악, 출연, 공개 제한을 검토합니다.",
+      "skills": [
+        "budget-&-legal-reviewer",
+        "handoff-contract",
+        "quality-check"
+      ],
+      "modelTier": "premium",
+      "externalApis": [],
+      "deliverables": [
+        "예산, 권리, 음악, 출연, 공개 제한을 검토합니다"
+      ]
+    },
+    {
+      "role": "후반 파이프라인 매니저",
+      "job": "편집, VFX, 사운드, 색보정, 납품 일정을 설계합니다.",
+      "skills": [
+        "post-pipeline-manager",
+        "handoff-contract",
+        "quality-check"
+      ],
+      "modelTier": "standard",
+      "externalApis": [],
+      "deliverables": [
+        "편집, VFX, 사운드, 색보정, 납품 일정을 설계합니다"
+      ]
+    }
+  ],
+  "edges": [
+    {
+      "from": "프로듀서 HQ",
+      "to": "스토리 개발자",
+      "handoff": "목표와 입력 범위"
+    },
+    {
+      "from": "스토리 개발자",
+      "to": "콘티 디렉터",
+      "handoff": "1차 분석 결과"
+    },
+    {
+      "from": "콘티 디렉터",
+      "to": "제작 스케줄러",
+      "handoff": "설계/제작 초안"
+    },
+    {
+      "from": "제작 스케줄러",
+      "to": "예산·법무 리뷰어",
+      "handoff": "검토 대상"
+    },
+    {
+      "from": "예산·법무 리뷰어",
+      "to": "후반 파이프라인 매니저",
+      "handoff": "승인된 패키지"
+    }
+  ],
+  "reviewGates": [
+    "외부 전송·삭제·결제·실행 전 사용자 승인",
+    "출처와 판단 근거 기록",
+    "개인정보·비밀값 출력 금지",
+    "실패 시 안전한 로컬 초안으로 대체"
+  ],
+  "costGuardrails": [
+    "수집·정리는 standard 이하",
+    "고난도 판단만 premium",
+    "동일 입력 반복 실행 차단",
+    "실패 재시도 횟수 제한"
+  ],
+  "selfImprovement": "실행 결과, 실패 원인, 사용자 수정 사항을 메모리 레저에 기록해 다음 체크리스트와 평가 기준을 갱신한다.",
+  "creditBand": "medium",
+  "userSetup": [
+    "스토리 브리프 입력",
+    "예산 상한과 촬영 기간 설정",
+    "권리·음악·출연 승인자 지정",
+    "납품 포맷 선택"
+  ],
+  "slug": "benchmark-film-studio-production-os",
+  "benchmark": {
+    "source": "agentlas-model-benchmark-long-timeout",
+    "promptId": "P04",
+    "promptName": "P04_FILM_STUDIO_AGENT",
+    "selectionRule": "highest score, shortest wall time as tie-breaker",
+    "selectedRuntime": "agentlas_upstage",
+    "selectedModel": "solar-pro2",
+    "score100": 96.0,
+    "wallTimeSeconds": 8.204
+  }
+}

@@ -2,7 +2,7 @@
 
 ## Use When
 
-You need to evaluate a model output against the meta-agent OS benchmark rubric.
+You need to evaluate a model output against the public agent-team OS benchmark rubric.
 
 ## Steps
 

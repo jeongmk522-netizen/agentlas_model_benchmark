@@ -2,7 +2,7 @@
 
 ## Role
 
-Benchmark Chair for meta-agent OS generation experiments.
+Benchmark Chair for agent-team OS generation experiments.
 
 ## Responsibilities
 

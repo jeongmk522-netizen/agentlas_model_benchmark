@@ -24,8 +24,8 @@ DEFAULT_OUT = ROOT / "data" / "evaluations" / "draft_scores.csv"
 SIGNALS = {
     "mission_topology": ["owner", "ownership", "controller", "chair", "escalation", "fallback owner", "approval authority"],
     "dynamic_tool_discovery": ["tool registry", "discover", "capability", "score", "routing", "permission", "fallback", "provenance"],
-    "hook_lifecycle": ["hook", "preflight", "post-run", "trigger", "idempot", "rollback", "failure handling"],
-    "context_engineering": ["memory", "retrieval", "compression", "summarization", "provenance", "stale", "handoff packet", "redaction", "context budget", "trust ranking"],
+    "workflow_automation": ["preflight", "post-run", "trigger", "idempot", "rollback", "failure handling", "checkpoint"],
+    "memory_context": ["memory", "retrieval", "compression", "summarization", "provenance", "stale", "handoff packet", "redaction", "context budget", "trust ranking"],
     "workflow_state_machine": ["state machine", "transition", "blocker", "retry", "handoff", "return contract", "termination", "evidence"],
     "domain_depth": ["compliance", "KPI", "risk", "constraint", "freshness", "audit", "policy", "edge case", "failure mode"],
     "governance_safety": ["human approval", "approval gate", "permission", "policy", "audit trail", "prompt injection", "safe abort", "irreversible"],
@@ -92,7 +92,7 @@ def verdict(score: int, rubric: dict, red_flags: list[str]) -> str:
     for band in rubric["verdict_bands"]:
         if int(band["min"]) <= score <= int(band["max"]):
             return band["verdict"]
-    return "Not useful for serious meta-agent generation"
+    return "Not useful for serious agent-team generation"
 
 
 def main() -> None:

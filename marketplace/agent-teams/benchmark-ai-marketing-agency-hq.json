@@ -1,0 +1,139 @@
+{
+  "name": "AI 마케팅 에이전시 HQ",
+  "tagline": "경쟁사 리서치, 캠페인 전략, 카피·디자인 생산, Playwright 검수, 성과 분석을 한 팀으로 운영합니다.",
+  "category": "marketing",
+  "orchestrator": {
+    "role": "캠페인 디렉터 HQ",
+    "job": "브랜드 목표와 채널별 제약을 받아 리서치, 크리에이티브, 랜딩 점검, 성과 측정으로 일을 나눈다."
+  },
+  "agents": [
+    {
+      "role": "시장 리서처",
+      "job": "경쟁사, 포지셔닝 빈틈, 현재 사례를 찾습니다.",
+      "skills": [
+        "market-researcher",
+        "handoff-contract",
+        "quality-check"
+      ],
+      "modelTier": "standard",
+      "externalApis": [],
+      "deliverables": [
+        "경쟁사, 포지셔닝 빈틈, 현재 사례를 찾습니다"
+      ]
+    },
+    {
+      "role": "전략 플래너",
+      "job": "캠페인 각도, 타깃, 채널, 오퍼 전략을 설계합니다.",
+      "skills": [
+        "strategy-planner",
+        "handoff-contract",
+        "quality-check"
+      ],
+      "modelTier": "premium",
+      "externalApis": [],
+      "deliverables": [
+        "캠페인 각도, 타깃, 채널, 오퍼 전략을 설계합니다"
+      ]
+    },
+    {
+      "role": "카피·크리에이티브 제작자",
+      "job": "훅, 캡션, 카드, 광고 변형을 만듭니다.",
+      "skills": [
+        "copy-&-creative-producer",
+        "handoff-contract",
+        "quality-check"
+      ],
+      "modelTier": "standard",
+      "externalApis": [],
+      "deliverables": [
+        "훅, 캡션, 카드, 광고 변형을 만듭니다"
+      ]
+    },
+    {
+      "role": "랜딩 QA 분석가",
+      "job": "브라우저 점검으로 랜딩과 퍼널을 검수합니다.",
+      "skills": [
+        "landing-qa-analyst",
+        "handoff-contract",
+        "quality-check"
+      ],
+      "modelTier": "premium",
+      "externalApis": [],
+      "deliverables": [
+        "브라우저 점검으로 랜딩과 퍼널을 검수합니다"
+      ]
+    },
+    {
+      "role": "성과 분석가",
+      "job": "성과 데이터를 읽고 다음 실험을 제안합니다.",
+      "skills": [
+        "performance-analyst",
+        "handoff-contract",
+        "quality-check"
+      ],
+      "modelTier": "standard",
+      "externalApis": [],
+      "deliverables": [
+        "성과 데이터를 읽고 다음 실험을 제안합니다"
+      ]
+    }
+  ],
+  "edges": [
+    {
+      "from": "캠페인 디렉터 HQ",
+      "to": "시장 리서처",
+      "handoff": "목표와 입력 범위"
+    },
+    {
+      "from": "시장 리서처",
+      "to": "전략 플래너",
+      "handoff": "1차 분석 결과"
+    },
+    {
+      "from": "전략 플래너",
+      "to": "카피·크리에이티브 제작자",
+      "handoff": "설계/제작 초안"
+    },
+    {
+      "from": "카피·크리에이티브 제작자",
+      "to": "랜딩 QA 분석가",
+      "handoff": "검토 대상"
+    },
+    {
+      "from": "랜딩 QA 분석가",
+      "to": "성과 분석가",
+      "handoff": "승인된 패키지"
+    }
+  ],
+  "reviewGates": [
+    "외부 전송·삭제·결제·실행 전 사용자 승인",
+    "출처와 판단 근거 기록",
+    "개인정보·비밀값 출력 금지",
+    "실패 시 안전한 로컬 초안으로 대체"
+  ],
+  "costGuardrails": [
+    "수집·정리는 standard 이하",
+    "고난도 판단만 premium",
+    "동일 입력 반복 실행 차단",
+    "실패 재시도 횟수 제한"
+  ],
+  "selfImprovement": "실행 결과, 실패 원인, 사용자 수정 사항을 메모리 레저에 기록해 다음 체크리스트와 평가 기준을 갱신한다.",
+  "creditBand": "medium",
+  "userSetup": [
+    "브랜드 톤과 금지어 입력",
+    "경쟁사/채널 선택",
+    "광고 계정 읽기 권한 연결",
+    "공개 전 승인자 지정"
+  ],
+  "slug": "benchmark-ai-marketing-agency-hq",
+  "benchmark": {
+    "source": "agentlas-model-benchmark-long-timeout",
+    "promptId": "P05",
+    "promptName": "P05_MARKETING_AGENCY_AGENT",
+    "selectionRule": "highest score, shortest wall time as tie-breaker",
+    "selectedRuntime": "agentlas_upstage",
+    "selectedModel": "solar-pro2",
+    "score100": 96.0,
+    "wallTimeSeconds": 9.467
+  }
+}

@@ -1,0 +1,139 @@
+{
+  "name": "Enterprise Software Delivery HQ",
+  "tagline": "A software delivery HQ with PRD, architecture, implementation, tests, security, and release gates.",
+  "category": "software",
+  "orchestrator": {
+    "role": "Product & Engineering HQ",
+    "job": "Routes requirements into PRD-first planning, architecture, implementation, QA, security review, and release decisions."
+  },
+  "agents": [
+    {
+      "role": "Product Planner",
+      "job": "Turns user goals into PRD, acceptance criteria, and scope boundaries.",
+      "skills": [
+        "product-planner",
+        "handoff-contract",
+        "quality-check"
+      ],
+      "modelTier": "standard",
+      "externalApis": [],
+      "deliverables": [
+        "Turns user goals into PRD, acceptance criteria, and scope boundaries"
+      ]
+    },
+    {
+      "role": "System Architect",
+      "job": "Designs data model, API contracts, and integration plan.",
+      "skills": [
+        "system-architect",
+        "handoff-contract",
+        "quality-check"
+      ],
+      "modelTier": "premium",
+      "externalApis": [],
+      "deliverables": [
+        "Designs data model, API contracts, and integration plan"
+      ]
+    },
+    {
+      "role": "Implementation Engineer",
+      "job": "Produces scoped code changes and migration notes.",
+      "skills": [
+        "implementation-engineer",
+        "handoff-contract",
+        "quality-check"
+      ],
+      "modelTier": "standard",
+      "externalApis": [],
+      "deliverables": [
+        "Produces scoped code changes and migration notes"
+      ]
+    },
+    {
+      "role": "QA & Eval Engineer",
+      "job": "Builds smoke tests, regression tests, and eval prompts.",
+      "skills": [
+        "qa-&-eval-engineer",
+        "handoff-contract",
+        "quality-check"
+      ],
+      "modelTier": "premium",
+      "externalApis": [],
+      "deliverables": [
+        "Builds smoke tests, regression tests, and eval prompts"
+      ]
+    },
+    {
+      "role": "Security & Release Gate",
+      "job": "Reviews auth, secrets, permissions, and deployment risk.",
+      "skills": [
+        "security-&-release-gate",
+        "handoff-contract",
+        "quality-check"
+      ],
+      "modelTier": "standard",
+      "externalApis": [],
+      "deliverables": [
+        "Reviews auth, secrets, permissions, and deployment risk"
+      ]
+    }
+  ],
+  "edges": [
+    {
+      "from": "Product & Engineering HQ",
+      "to": "Product Planner",
+      "handoff": "Goal and input scope"
+    },
+    {
+      "from": "Product Planner",
+      "to": "System Architect",
+      "handoff": "First-pass analysis"
+    },
+    {
+      "from": "System Architect",
+      "to": "Implementation Engineer",
+      "handoff": "Draft plan or asset"
+    },
+    {
+      "from": "Implementation Engineer",
+      "to": "QA & Eval Engineer",
+      "handoff": "Review target"
+    },
+    {
+      "from": "QA & Eval Engineer",
+      "to": "Security & Release Gate",
+      "handoff": "Approved package"
+    }
+  ],
+  "reviewGates": [
+    "User approval before external send/delete/payment/execution",
+    "Record sources and rationale",
+    "Never print private data or secrets",
+    "Fall back to safe local drafts on failure"
+  ],
+  "costGuardrails": [
+    "Use standard or lower for collection and cleanup",
+    "Premium only for difficult judgment",
+    "Block repeated runs on same input",
+    "Cap retry count"
+  ],
+  "selfImprovement": "Logs run outcomes, failure causes, and user edits into a memory ledger, then updates checklists and eval criteria.",
+  "creditBand": "medium",
+  "userSetup": [
+    "Connect repo and deployment target",
+    "Set approvers and release criteria",
+    "Enter test commands",
+    "Set security block patterns"
+  ],
+  "slug": "benchmark-enterprise-software-delivery-hq",
+  "benchmark": {
+    "source": "agentlas-model-benchmark-long-timeout",
+    "promptId": "P06",
+    "promptName": "P06_ENTERPRISE_SOFTWARE_HQ_AGENT",
+    "selectionRule": "highest score, shortest wall time as tie-breaker",
+    "selectedRuntime": "agentlas_upstage",
+    "selectedModel": "solar-pro2",
+    "score100": 96.0,
+    "wallTimeSeconds": 8.403
+  }
+}

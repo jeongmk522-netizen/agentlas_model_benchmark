@@ -1,0 +1,139 @@
+{
+  "name": "벤더 리스크·조달 검토 데스크",
+  "tagline": "신규 SaaS·외주·공급업체를 보안, 비용, 계약, 운영 리스크 관점에서 검토해 승인 가능한 구매 패킷을 만듭니다.",
+  "category": "compliance",
+  "orchestrator": {
+    "role": "조달 심사 HQ",
+    "job": "구매 요청을 벤더 조사, 보안 설문, 계약 리스크, 비용 비교, 승인 패킷 작성으로 라우팅한다. 결제와 계약 체결은 승인 전까지 차단한다."
+  },
+  "agents": [
+    {
+      "role": "구매 요청 접수 분석가",
+      "job": "업무 목적, 담당자, 예산, 필요한 승인 경로를 정리합니다.",
+      "skills": [
+        "request-intake-analyst",
+        "handoff-contract",
+        "quality-check"
+      ],
+      "modelTier": "standard",
+      "externalApis": [],
+      "deliverables": [
+        "업무 목적, 담당자, 예산, 필요한 승인 경로를 정리합니다"
+      ]
+    },
+    {
+      "role": "벤더 근거 조사관",
+      "job": "가격, 보안 문서, 상태 페이지, 공개 사고, 레퍼런스를 수집합니다.",
+      "skills": [
+        "vendor-evidence-researcher",
+        "handoff-contract",
+        "quality-check"
+      ],
+      "modelTier": "premium",
+      "externalApis": [],
+      "deliverables": [
+        "가격, 보안 문서, 상태 페이지, 공개 사고, 레퍼런스를 수집합니다"
+      ]
+    },
+    {
+      "role": "보안 설문 검토관",
+      "job": "SOC2/ISO 주장, 데이터 접근, SSO, 로그, 보존, 하위처리자를 확인합니다.",
+      "skills": [
+        "security-questionnaire-reviewer",
+        "handoff-contract",
+        "quality-check"
+      ],
+      "modelTier": "standard",
+      "externalApis": [],
+      "deliverables": [
+        "SOC2/ISO 주장, 데이터 접근, SSO, 로그, 보존, 하위처리자를 확인합니다"
+      ]
+    },
+    {
+      "role": "계약·비용 분석가",
+      "job": "갱신 조건, 락인, 해지, 숨은 사용료, 대안을 비교합니다.",
+      "skills": [
+        "contract-&-cost-analyst",
+        "handoff-contract",
+        "quality-check"
+      ],
+      "modelTier": "premium",
+      "externalApis": [],
+      "deliverables": [
+        "갱신 조건, 락인, 해지, 숨은 사용료, 대안을 비교합니다"
+      ]
+    },
+    {
+      "role": "승인 패킷 매니저",
+      "job": "잔여 리스크, 필요 완화책, 승인권자가 포함된 go/no-go 패킷을 작성합니다.",
+      "skills": [
+        "approval-packet-manager",
+        "handoff-contract",
+        "quality-check"
+      ],
+      "modelTier": "standard",
+      "externalApis": [],
+      "deliverables": [
+        "잔여 리스크, 필요 완화책, 승인권자가 포함된 go/no-go 패킷을 작성합니다"
+      ]
+    }
+  ],
+  "edges": [
+    {
+      "from": "조달 심사 HQ",
+      "to": "구매 요청 접수 분석가",
+      "handoff": "목표와 입력 범위"
+    },
+    {
+      "from": "구매 요청 접수 분석가",
+      "to": "벤더 근거 조사관",
+      "handoff": "1차 분석 결과"
+    },
+    {
+      "from": "벤더 근거 조사관",
+      "to": "보안 설문 검토관",
+      "handoff": "설계/제작 초안"
+    },
+    {
+      "from": "보안 설문 검토관",
+      "to": "계약·비용 분석가",
+      "handoff": "검토 대상"
+    },
+    {
+      "from": "계약·비용 분석가",
+      "to": "승인 패킷 매니저",
+      "handoff": "승인된 패키지"
+    }
+  ],
+  "reviewGates": [
+    "외부 전송·삭제·결제·실행 전 사용자 승인",
+    "출처와 판단 근거 기록",
+    "개인정보·비밀값 출력 금지",
+    "실패 시 안전한 로컬 초안으로 대체"
+  ],
+  "costGuardrails": [
+    "수집·정리는 standard 이하",
+    "고난도 판단만 premium",
+    "동일 입력 반복 실행 차단",
+    "실패 재시도 횟수 제한"
+  ],
+  "selfImprovement": "실행 결과, 실패 원인, 사용자 수정 사항을 메모리 레저에 기록해 다음 체크리스트와 평가 기준을 갱신한다.",
+  "creditBand": "medium",
+  "userSetup": [
+    "구매 요청 양식 연결",
+    "승인권자와 금액 한도 설정",
+    "보안 설문 템플릿 업로드",
+    "허용/금지 데이터 범위 지정"
+  ],
+  "slug": "benchmark-vendor-risk-procurement-desk",
+  "benchmark": {
+    "source": "curated-public-replacement",
+    "promptId": "S10",
+    "promptName": "S10_VENDOR_RISK_PROCUREMENT_DESK",
+    "selectionRule": "public-safe replacement for a non-public case",
+    "selectedRuntime": "public_curated",
+    "selectedModel": "public-safe-template",
+    "score100": null,
+    "wallTimeSeconds": null
+  }
+}

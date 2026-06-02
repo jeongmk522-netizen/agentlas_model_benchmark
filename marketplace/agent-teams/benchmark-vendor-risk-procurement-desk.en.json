@@ -1,0 +1,139 @@
+{
+  "name": "Vendor Risk & Procurement Review Desk",
+  "tagline": "Reviews new SaaS, contractor, and supplier requests across security, cost, contract, and operational risk before purchase approval.",
+  "category": "compliance",
+  "orchestrator": {
+    "role": "Procurement Review HQ",
+    "job": "Routes purchase requests through vendor research, security questionnaire review, contract risk, cost comparison, and approval packaging. Blocks payment and contract execution before approval."
+  },
+  "agents": [
+    {
+      "role": "Request Intake Analyst",
+      "job": "Captures business need, owner, budget, and required approval path.",
+      "skills": [
+        "request-intake-analyst",
+        "handoff-contract",
+        "quality-check"
+      ],
+      "modelTier": "standard",
+      "externalApis": [],
+      "deliverables": [
+        "Captures business need, owner, budget, and required approval path"
+      ]
+    },
+    {
+      "role": "Vendor Evidence Researcher",
+      "job": "Collects pricing, security docs, status pages, public incidents, and references.",
+      "skills": [
+        "vendor-evidence-researcher",
+        "handoff-contract",
+        "quality-check"
+      ],
+      "modelTier": "premium",
+      "externalApis": [],
+      "deliverables": [
+        "Collects pricing, security docs, status pages, public incidents, and references"
+      ]
+    },
+    {
+      "role": "Security Questionnaire Reviewer",
+      "job": "Checks SOC2/ISO claims, data access, SSO, logging, retention, and subprocessors.",
+      "skills": [
+        "security-questionnaire-reviewer",
+        "handoff-contract",
+        "quality-check"
+      ],
+      "modelTier": "standard",
+      "externalApis": [],
+      "deliverables": [
+        "Checks SOC2/ISO claims, data access, SSO, logging, retention, and subprocessors"
+      ]
+    },
+    {
+      "role": "Contract & Cost Analyst",
+      "job": "Compares renewal terms, lock-in, cancellation, hidden usage fees, and alternatives.",
+      "skills": [
+        "contract-&-cost-analyst",
+        "handoff-contract",
+        "quality-check"
+      ],
+      "modelTier": "premium",
+      "externalApis": [],
+      "deliverables": [
+        "Compares renewal terms, lock-in, cancellation, hidden usage fees, and alternatives"
+      ]
+    },
+    {
+      "role": "Approval Packet Manager",
+      "job": "Builds a go/no-go packet with residual risks, required mitigations, and approvers.",
+      "skills": [
+        "approval-packet-manager",
+        "handoff-contract",
+        "quality-check"
+      ],
+      "modelTier": "standard",
+      "externalApis": [],
+      "deliverables": [
+        "Builds a go/no-go packet with residual risks, required mitigations, and approvers"
+      ]
+    }
+  ],
+  "edges": [
+    {
+      "from": "Procurement Review HQ",
+      "to": "Request Intake Analyst",
+      "handoff": "Goal and input scope"
+    },
+    {
+      "from": "Request Intake Analyst",
+      "to": "Vendor Evidence Researcher",
+      "handoff": "First-pass analysis"
+    },
+    {
+      "from": "Vendor Evidence Researcher",
+      "to": "Security Questionnaire Reviewer",
+      "handoff": "Draft plan or asset"
+    },
+    {
+      "from": "Security Questionnaire Reviewer",
+      "to": "Contract & Cost Analyst",
+      "handoff": "Review target"
+    },
+    {
+      "from": "Contract & Cost Analyst",
+      "to": "Approval Packet Manager",
+      "handoff": "Approved package"
+    }
+  ],
+  "reviewGates": [
+    "User approval before external send/delete/payment/execution",
+    "Record sources and rationale",
+    "Never print private data or secrets",
+    "Fall back to safe local drafts on failure"
+  ],
+  "costGuardrails": [
+    "Use standard or lower for collection and cleanup",
+    "Premium only for difficult judgment",
+    "Block repeated runs on same input",
+    "Cap retry count"
+  ],
+  "selfImprovement": "Logs run outcomes, failure causes, and user edits into a memory ledger, then updates checklists and eval criteria.",
+  "creditBand": "medium",
+  "userSetup": [
+    "Connect purchase request form",
+    "Set approvers and spend limits",
+    "Upload security questionnaire template",
+    "Define allowed and forbidden data scope"
+  ],
+  "slug": "benchmark-vendor-risk-procurement-desk",
+  "benchmark": {
+    "source": "curated-public-replacement",
+    "promptId": "S10",
+    "promptName": "S10_VENDOR_RISK_PROCUREMENT_DESK",
+    "selectionRule": "public-safe replacement for a non-public case",
+    "selectedRuntime": "public_curated",
+    "selectedModel": "public-safe-template",
+    "score100": null,
+    "wallTimeSeconds": null
+  }
+}

@@ -1,5 +1,5 @@
 {
-  "common_prefix": "Do not inspect, read, write, or modify local files. Do not ask follow-up questions. Make reasonable assumptions yourself.\n\nDesign this as an installable meta-agent operating system, not a conceptual org chart.\n\nImportant constraints:\n- The tool catalog is unknown at design time. Do not hardcode a fixed tool list into the core system prompt.\n- Design dynamic tool discovery, tool scoring, tool routing, permission gates, hook lifecycle, and fallback behavior.\n- Include context engineering: memory scopes, retrieval policy, compression/summarization, provenance, stale-context detection, and handoff packets.\n- Include architecture, workflow state machine, evals, smoke tests, red-team tests, observability, cost controls, and human approval gates.\n- Output a self-contained Markdown package spec with folder structure, agent roles, core contracts, routing rules, hook interfaces, tool registry schema, and first-day test plan.",
+  "common_prefix": "Do not inspect, read, write, or modify local files. Do not ask follow-up questions. Make reasonable assumptions yourself.\n\nDesign this as an installable multi-agent operating package, not a conceptual org chart.\n\nImportant constraints:\n- The tool catalog is unknown at design time. Do not hardcode a fixed tool list into the core prompt.\n- Design tool discovery, tool scoring, tool routing, permission gates, workflow states, fallback behavior, and result provenance.\n- Include memory scopes, retrieval policy, summarization, stale-evidence detection, and handoff packets.\n- Include architecture, workflow state machine, evals, smoke tests, adversarial tests, observability, cost controls, and human approval gates.\n- Output a self-contained Markdown package spec with folder structure, agent roles, core contracts, routing rules, interface contracts, and first-day test plan.",
   "prompts": [
     {
       "id": "P01_INVESTMENT_FUND_AGENT",
@@ -21,7 +21,7 @@
       "id": "P03_DISASTER_DRONE_SWARM_AGENT",
       "short_id": "P03",
       "domain": "Disaster response drones",
-      "text": "Design a non-weaponized drone swarm coordination meta-agent for disaster response, search-and-rescue, and infrastructure inspection. No targeting, weapons, evasion, or offensive use. The system must route between mapping tools, weather feeds, drone telemetry, battery constraints, no-fly zones, mission planning, human operator approvals, incident logs, and post-mission analysis. Include safety gates, abort logic, simulation tests, and command handoff protocols.",
+      "text": "Design a non-weaponized drone swarm coordination agent team for disaster response, search-and-rescue, and infrastructure inspection. No targeting, weapons, evasion, or offensive use. The system must route between mapping tools, weather feeds, drone telemetry, battery constraints, no-fly zones, mission planning, human operator approvals, incident logs, and post-mission analysis. Include safety gates, abort logic, simulation tests, and command handoff protocols.",
       "extra_checks": ["non-weaponized disaster/search/rescue scope", "no targeting/evasion/offensive tactics", "no-fly zones", "battery constraints", "abort logic", "operator approval", "simulation"],
       "red_flags": ["military targeting or autonomous harmful action"]
     },
@@ -37,7 +37,7 @@
       "id": "P05_MARKETING_AGENCY_AGENT",
       "short_id": "P05",
       "domain": "Marketing agency",
-      "text": "Design a full-stack AI marketing agency meta-agent. It must research competitors, inspect websites with browser tools, generate campaign strategy, create ad concepts, produce landing page briefs, run SEO checks, design A/B tests, plan social content, and measure conversion. Include Playwright/browser workflow design, data connectors, brand memory, creative review gates, legal/compliance review, campaign retrospectives, and tool fallback rules.",
+      "text": "Design a full-stack AI marketing agency agent team. It must research competitors, inspect websites with browser tools, generate campaign strategy, create ad concepts, produce landing page briefs, run SEO checks, design A/B tests, plan social content, and measure conversion. Include browser workflow design, data connectors, brand memory, creative review gates, legal/compliance review, campaign retrospectives, and tool fallback rules.",
       "extra_checks": ["browser/Playwright workflow", "competitor research", "landing page inspection", "brand memory", "A/B test design", "legal review"],
       "red_flags": ["generic campaign plan without tool/data workflow"]
     },
@@ -45,7 +45,7 @@
       "id": "P06_ENTERPRISE_SOFTWARE_HQ_AGENT",
       "short_id": "P06",
       "domain": "Enterprise software",
-      "text": "Create an enterprise software delivery meta-agent for building and maintaining complex SaaS products. It must support PRD-first planning, architecture review, code generation, test planning, CI/CD, security review, incident response, migration planning, customer support feedback, and release governance. The tool catalog is dynamic: repo tools, issue trackers, docs, logs, cloud consoles, and browsers may or may not exist. Design adaptive tool selection and context pack generation.",
+      "text": "Create an enterprise software delivery agent team for building and maintaining complex SaaS products. It must support PRD-first planning, architecture review, code generation, test planning, CI/CD, security review, incident response, migration planning, customer support feedback, and release governance. The tool catalog is dynamic: repo tools, issue trackers, docs, logs, cloud consoles, and browsers may or may not exist. Design adaptive tool selection and context pack generation.",
       "extra_checks": ["PRD-first planning", "repo/issue/docs/log/cloud/browser dynamic tools", "CI/CD", "security", "incidents", "migrations", "governance and release gates"],
       "red_flags": ["code generation without governance and test/release gates"]
     },
@@ -61,7 +61,7 @@
       "id": "P08_SUPPLY_CHAIN_CONTROL_TOWER_AGENT",
       "short_id": "P08",
       "domain": "Supply chain",
-      "text": "Create a supply-chain control tower meta-agent for a multinational retailer. It must coordinate demand forecasting, supplier risk, inventory optimization, shipping delays, customs docs, warehouse capacity, pricing signals, and incident response. Include tool discovery for ERP, web search, weather, port data, spreadsheets, maps, and ticketing systems. Design state machines, optimization loops, exception handling, memory, and KPI dashboards.",
+      "text": "Create a supply-chain control tower agent team for a multinational retailer. It must coordinate demand forecasting, supplier risk, inventory optimization, shipping delays, customs docs, warehouse capacity, pricing signals, and incident response. Include tool discovery for ERP, web search, weather, port data, spreadsheets, maps, and ticketing systems. Design state machines, optimization loops, exception handling, memory, and KPI dashboards.",
       "extra_checks": ["ERP/web/weather/port/map/spreadsheet/ticketing discovery", "optimization loops", "exception workflows", "KPI dashboard", "data freshness"],
       "red_flags": ["no data freshness or exception handling"]
     },
@@ -69,17 +69,17 @@
       "id": "P09_SOC_THREAT_RESPONSE_AGENT",
       "short_id": "P09",
       "domain": "SOC",
-      "text": "Design a SOC and threat detection engineering meta-agent. It must dynamically select tools for SIEM, EDR, cloud logs, threat intel, ticketing, detection rules, and runbooks. Include alert triage, evidence graph, MITRE mapping, detection-as-code workflow, safe containment approval gates, post-incident learning memory, prompt-injection defenses, and red-team evals. No offensive exploitation instructions.",
+      "text": "Design a SOC and threat detection engineering agent team. It must dynamically select tools for SIEM, EDR, cloud logs, threat intel, ticketing, detection rules, and runbooks. Include alert triage, evidence graph, MITRE mapping, detection-as-code workflow, safe containment approval gates, post-incident learning memory, prompt-injection defenses, and red-team evals. No offensive exploitation instructions.",
       "extra_checks": ["SIEM/EDR/cloud logs/threat intel routing", "evidence graph", "MITRE mapping", "detection-as-code", "safe containment approvals", "prompt-injection defenses"],
       "red_flags": ["offensive exploitation instructions"]
     },
     {
-      "id": "P10_META_AGENT_FACTORY",
+      "id": "S10_VENDOR_RISK_PROCUREMENT_DESK",
       "short_id": "P10",
-      "domain": "Meta-agent factory",
-      "text": "Create a meta-agent factory that designs, evaluates, installs, and improves specialized agent teams for arbitrary domains. It must not rely on fixed seed agents. Instead, design role synthesis, tool discovery, capability mapping, context engineering, hook generation, eval generation, sandbox policy, cost model selection, rollout strategy, and continuous improvement memory. Include how it would build agents for finance, film, marketing, software, and operations from one universal core.",
-      "extra_checks": ["role synthesis", "capability mapping", "tool discovery", "hook generation", "eval generation", "sandbox policy", "rollout", "continuous improvement"],
-      "red_flags": ["fixed seed agent list as the core design"]
+      "domain": "Vendor risk and procurement",
+      "text": "Create a vendor risk and procurement review agent team for evaluating new SaaS tools, contractors, and suppliers before purchase approval. It must coordinate business need intake, vendor evidence collection, security questionnaire review, contract and renewal risk, cost comparison, stakeholder approvals, audit trail, and post-purchase monitoring. Include data-access boundaries, privacy review, approval gates, stale evidence detection, and alternative-vendor comparison.",
+      "extra_checks": ["vendor evidence", "security questionnaire", "contract risk", "cost comparison", "approval gates", "audit trail", "privacy review", "alternatives"],
+      "red_flags": ["auto-approves purchase or contract execution without approval"]
     }
   ]
 }

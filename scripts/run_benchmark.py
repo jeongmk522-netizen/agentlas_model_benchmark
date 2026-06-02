@@ -299,7 +299,7 @@ def run_one(args: argparse.Namespace, catalog: dict[str, Any], prompt: dict[str,
 
 
 def parse_args() -> argparse.Namespace:
-    parser = argparse.ArgumentParser(description="Run meta-agent OS benchmark prompts.")
+    parser = argparse.ArgumentParser(description="Run agent-team OS benchmark prompts.")
     parser.add_argument("--runtime", required=True, choices=["upstage_api", "cli", "claude_code", "codex_cli", "gemini_cli", "antigravity_cli"])
     parser.add_argument("--model", required=True)
     parser.add_argument("--prompt-id")

@@ -16,31 +16,38 @@
 
 # Agentlas Model Benchmark
 
-> A reproducible benchmark for comparing how model runtimes design installable meta-agent operating systems.
+> A reproducible benchmark for comparing how model runtimes design installable agent-team operating systems.
 
 ## Research Question
 
-Which model/runtime can produce an operational meta-agent OS instead of a role list or conceptual org chart?
+Which model/runtime can produce an operational agent-team OS instead of a role list or conceptual org chart?
 
-This benchmark gives each runtime the same common prefix and 10 domain prompts. The output is scored on dynamic tool discovery, context engineering, workflow state machines, governance, tests, observability, and installable artifact quality.
+This benchmark gives each runtime the same public prompt contract and domain prompts. The public aggregate excludes one non-public case; the marketplace pack replaces it with a public-safe procurement workflow. Outputs are scored on tool routing, evidence memory, workflow states, governance, tests, observability, and installable artifact quality.
 
 ## Main Result
 
-The final run uses the real Agentlas meta-agent pipeline from the Agentlas app: compact meta-agent synthesis, Agentlas draft JSON, generated repo export, ZIP sandbox extraction, readiness checks, and reviewed score aggregation.
+The current headline run uses the Agentlas public agent-team export path: draft JSON, generated repo export, ZIP sandbox extraction, readiness checks, and reviewed score aggregation. After increasing the per-case timeout to 900s, Claude, Codex, Gemini 3.1, and Solar2 completed every public case. The earlier “Claude/GPT failed” result was a harness-timeout artifact.
 
-| Runtime | Model | Cases | LLM draft success | Failures | Reviewed avg | Interpretation |
-|---------|-------|------:|------------------:|---------:|-------------:|----------------|
-| Upstage custom CLI | `solar-pro2` | 10 | 10 | 0 | 90.0 | Fastest successful Agentlas provider in this run. |
-| Gemini CLI | `gemini-3-flash-preview` | 10 | 10 | 0 | 90.0 | Same reviewed quality as Upstage, slower wall time. |
-| Codex CLI | `gpt-5.5` | 10 | 7 | 3 | 63.0 | Strong when it completed; unstable under the 180s per-case contract. |
-| Claude Code | `claude-sonnet-4-6` | 10 | 0 | 10 | 0.0 | Timed out in the Agentlas CLI provider path. |
-| Antigravity CLI | `default` | 10 | 0 | 10 | 0.0 | Local headless CLI returned no stdout, so Agentlas could not consume it. |
+| Runtime | Model | Cases | LLM draft success | Reviewed avg | Avg time | Estimated public-suite API cost* | Interpretation |
+|---------|-------|------:|------------------:|-------------:|---------:|----------------------------:|----------------|
+| Codex CLI | `gpt-5.5` | 9 | 9 | 96.0 | 67.40s | $0.9718 | Top quality, slower and more expensive than Gemini/Solar. |
+| Claude Code | `claude-sonnet-4-6` | 9 | 9 | 96.0 | 353.50s | $1.3289 | Top quality, slowest in this harness. |
+| Gemini CLI | `gemini-3.1-pro-preview` | 9 | 9 | 96.0 | 41.41s | $0.2040 | Top quality with much better speed/cost. |
+| Upstage custom CLI | `solar-pro2` | 9 | 9 | 95.9 | 9.79s | $0.0099 | Essentially tied on quality; fastest and cheapest by the proxy estimate. |
+| Gemini CLI | `gemini-3-flash-preview` | 9 | 9 | 94.1 | 65.78s | $0.0950 | Slightly lower quality in this rubric, still stable. |
+| Antigravity CLI | `default` | 9 | 0 | 0.0 | 1.43s | n/a | Headless stdout contract failed; not model-quality evidence. |
 
-The earlier direct Upstage API baseline is retained as historical context, but it is not the headline comparison because it did not exercise the Agentlas meta-agent repo-generation path.
+*CLI runs did not produce exact billable API tokens. Cost is a proxy: observed CLI character-count usage divided by 4, multiplied by public API list prices.
+
+![Quality vs time, zoomed y-axis](assets/agentlas_meta_score_time_zoom.png)
+
+![Score vs estimated API cost, zoomed y-axis](assets/agentlas_meta_score_cost_zoom.png)
+
+![Estimated tokens, cost, and score](assets/agentlas_meta_tokens_cost_score.png)
 
 ## Agent Contract
 
-- Purpose: run fair meta-agent OS design prompts across runtimes, collect outputs, score with one rubric, and publish public-safe analysis.
+- Purpose: run fair agent-team OS design prompts across runtimes, collect outputs, score with one rubric, and publish public-safe analysis.
 - Inputs: prompt catalog, runtime adapter, model label, rubric, raw run artifacts, usage metadata.
 - Outputs: model run files, usage JSON, error logs, rubric scores, comparative research report.
 - Tools: dynamic runtime adapters for API and CLI runners, scoring scripts, public safety checks.
@@ -62,10 +69,10 @@ COMMON_PREFIX
   P07 hospital operations agent
   P08 supply-chain control tower agent
   P09 SOC threat response agent
-  P10 meta-agent factory
+  S10 vendor risk and procurement desk (public marketplace replacement; not part of scored aggregate)
 ```
 
-Agentlas meta-agent runs are saved outside the public repo with this contract:
+Raw Agentlas runs are saved outside the public repo with this contract:
 
 ```text
 <raw-run-dir>/<runtime>_<model>_direct-draft/Pxx/
@@ -82,40 +89,37 @@ Agentlas meta-agent runs are saved outside the public repo with this contract:
 ```bash
 cd <agentlas-app>/app
 
-# Upstage via Agentlas custom CLI provider.
-export UPSTAGE_API_KEY="..."
-npx tsx <benchmark-repo>/scripts/agentlas_meta_benchmark.ts \
-  --runtime upstage \
-  --model solar-pro2 \
-  --all \
-  --out-dir <raw-run-dir> \
-  --public-out-dir <benchmark-repo>/data/evaluations
-
-# Produce the reviewed aggregate table from raw automated summaries.
+# Produce the reviewed public aggregate table, token/cost table, and charts
+# from the reviewed operator source CSV.
 cd <benchmark-repo>
-python3 scripts/review_agentlas_meta_scores.py
+python3 scripts/compile_long_timeout_report.py
+
+# Export public-safe Agentlas team marketplace specs.
+python3 scripts/export_team_use_cases.py
 ```
 
-The runner only reads the key from the environment. Do not place provider keys in this repository.
+Provider keys and private execution runners stay outside this repository. Do not place provider keys or proprietary generation scripts in public outputs.
 
 ## Research Outputs
 
 - [docs/methodology.md](docs/methodology.md): benchmark design, metadata, and scoring method.
 - [docs/paper.md](docs/paper.md): paper-style report and interpretation.
+- [docs/marketplace-use-cases.md](docs/marketplace-use-cases.md): public-safe team marketplace use cases; one non-public case is replaced by an unscored procurement workflow.
 - [docs/upstage-solar-pro2-baseline.md](docs/upstage-solar-pro2-baseline.md): first Upstage/Solar baseline report.
 - [benchmark/prompts.json](benchmark/prompts.json): common prefix, 10 prompts, and red flags.
 - [benchmark/rubric.json](benchmark/rubric.json): 100-point rubric.
 - [data/evaluations/](data/evaluations/): public score tables and summaries.
+- [marketplace/agent-teams/](marketplace/agent-teams/): public-safe JSON team specs for the Agentlas web marketplace.
 
 ## Repository Map
 
 - [agent.md](agent.md): benchmark chair contract.
 - [agents/](agents/): visible role hierarchy for running and reviewing the benchmark.
 - [skills/](skills/): reusable benchmark skills.
-- [scripts/agentlas_meta_benchmark.ts](scripts/agentlas_meta_benchmark.ts): Agentlas meta-agent runner.
 - [scripts/upstage_agentlas_cli.py](scripts/upstage_agentlas_cli.py): Upstage custom CLI provider wrapper for Agentlas.
 - [scripts/antigravity_agentlas_cli.py](scripts/antigravity_agentlas_cli.py): Antigravity wrapper used to record stdout-contract failures.
-- [scripts/review_agentlas_meta_scores.py](scripts/review_agentlas_meta_scores.py): reviewed aggregate score builder.
+- [scripts/compile_long_timeout_report.py](scripts/compile_long_timeout_report.py): current aggregate, token/cost CSVs, and charts.
+- [scripts/export_team_use_cases.py](scripts/export_team_use_cases.py): exports public-safe Agentlas team marketplace specs.
 - [scripts/run_benchmark.py](scripts/run_benchmark.py): public-safe API/CLI runner scaffold.
 - [scripts/score_runs.py](scripts/score_runs.py): rubric-aligned evidence extractor and draft scorer.
 - [CLAUDE.md](CLAUDE.md): Claude Code guide.

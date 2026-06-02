@@ -1,0 +1,154 @@
+{
+  "name": "AML & Fraud Investigation Team",
+  "tagline": "Runs alert triage, evidence custody, sanctions and PEP checks, and audit-ready investigation reporting.",
+  "category": "compliance",
+  "orchestrator": {
+    "role": "Investigation Command HQ",
+    "job": "Prioritizes alerts and routes work across KYC, transaction patterns, sanctions lists, evidence custody, and reporting. Customer actions or filings require approval gates."
+  },
+  "agents": [
+    {
+      "role": "Alert Triage",
+      "job": "Classifies transaction alerts by risk and urgency.",
+      "skills": [
+        "alert-triage",
+        "case-priority",
+        "false-positive-filter"
+      ],
+      "modelTier": "cheap",
+      "externalApis": [
+        "Transaction monitoring system"
+      ],
+      "deliverables": [
+        "Priority queue",
+        "Initial case brief"
+      ]
+    },
+    {
+      "role": "KYC & Account Analyst",
+      "job": "Checks profiles, beneficial owners, and historical verification records.",
+      "skills": [
+        "kyc-review",
+        "entity-resolution",
+        "profile-drift"
+      ],
+      "modelTier": "standard",
+      "externalApis": [
+        "KYC provider",
+        "CRM"
+      ],
+      "deliverables": [
+        "KYC deltas",
+        "Risk profile"
+      ]
+    },
+    {
+      "role": "Transaction Pattern Analyst",
+      "job": "Detects transaction networks, structuring, and anomalous patterns.",
+      "skills": [
+        "graph-analysis",
+        "velocity-check",
+        "pattern-mining"
+      ],
+      "modelTier": "premium",
+      "externalApis": [
+        "Transaction graph DB"
+      ],
+      "deliverables": [
+        "Pattern analysis",
+        "Connected-account map"
+      ]
+    },
+    {
+      "role": "Sanctions & PEP Reviewer",
+      "job": "Verifies sanctions, PEP, and adverse media hits with evidence.",
+      "skills": [
+        "sanctions-screen",
+        "pep-check",
+        "adverse-media-review"
+      ],
+      "modelTier": "premium",
+      "externalApis": [
+        "Sanctions API",
+        "Web search"
+      ],
+      "deliverables": [
+        "Sanctions evidence table",
+        "Source links"
+      ]
+    },
+    {
+      "role": "Audit Report Writer",
+      "job": "Turns evidence custody and decision logs into reviewable reports.",
+      "skills": [
+        "chain-of-custody",
+        "sar-draft",
+        "audit-reporting"
+      ],
+      "modelTier": "standard",
+      "externalApis": [],
+      "deliverables": [
+        "Investigation report",
+        "Pending action package"
+      ]
+    }
+  ],
+  "edges": [
+    {
+      "from": "Investigation Command HQ",
+      "to": "Alert Triage",
+      "handoff": "New alert and policy scope"
+    },
+    {
+      "from": "Alert Triage",
+      "to": "KYC & Account Analyst",
+      "handoff": "Priority cases and related customers"
+    },
+    {
+      "from": "KYC & Account Analyst",
+      "to": "Transaction Pattern Analyst",
+      "handoff": "Account and party context"
+    },
+    {
+      "from": "Transaction Pattern Analyst",
+      "to": "Sanctions & PEP Reviewer",
+      "handoff": "High-risk entities"
+    },
+    {
+      "from": "Sanctions & PEP Reviewer",
+      "to": "Audit Report Writer",
+      "handoff": "Verified findings and evidence"
+    }
+  ],
+  "reviewGates": [
+    "Compliance approval before account freezes or filings",
+    "Record source and lookup time for every evidence item",
+    "Minimize exposed PII",
+    "Never confirm wrongdoing from model inference alone"
+  ],
+  "costGuardrails": [
+    "Cheap tier for bulk alert sorting",
+    "Premium only for graph and sanctions review",
+    "Merge duplicate cases",
+    "Batch low-risk alerts"
+  ],
+  "selfImprovement": "Stores true/false positive outcomes by typology to tune alert priority and false-positive filters.",
+  "creditBand": "high",
+  "userSetup": [
+    "Connect transaction monitoring",
+    "Add KYC/sanctions API keys",
+    "Set approvers and filing rules",
+    "Confirm PII retention policy"
+  ],
+  "slug": "benchmark-aml-fraud-investigation-team",
+  "benchmark": {
+    "source": "agentlas-model-benchmark-long-timeout",
+    "promptId": "P02",
+    "promptName": "P02_AML_FRAUD_INVESTIGATION_AGENT",
+    "selectionRule": "highest score, shortest wall time as tie-breaker",
+    "selectedRuntime": "agentlas_gemini",
+    "selectedModel": "gemini-3.1-pro-preview",
+    "score100": 96.0,
+    "wallTimeSeconds": 38.574
+  }
+}

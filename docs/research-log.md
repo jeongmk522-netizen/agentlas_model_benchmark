@@ -8,11 +8,11 @@ Claim type: observed
 
 ### Claim
 
-The benchmark should compare model/runtime ability to produce an installable meta-agent OS, not just a conceptual role list.
+The benchmark should compare model/runtime ability to produce an installable agent-team OS, not just a conceptual role list.
 
 ### Evidence
 
-The seed prompt requires dynamic tool discovery, tool scoring, permission gates, hook lifecycle, context engineering, workflow state machines, smoke tests, red-team tests, observability, cost controls, and human approval gates. It also defines 10 domain prompts and a 100-point rubric.
+The seed prompt requires dynamic tool discovery, tool scoring, permission gates, workflow automation, memory/context handling, workflow state machines, smoke tests, red-team tests, observability, cost controls, and human approval gates. The public prompt catalog excludes non-public cases.
 
 ### Interpretation
 
@@ -20,23 +20,23 @@ The benchmark is useful only if it preserves the same prompt contract across run
 
 ### Next Experiment
 
-Run `Upstage API + solar-pro2` across P01-P10, collect usage metadata, and produce the first score table.
+Run `Upstage API + solar-pro2` across the public prompt set, collect usage metadata, and produce the first score table.
 
-## 2026-06-02: Agentlas Meta-Agent Sweep
+## 2026-06-02: Agentlas Agent-Team Sweep
 
 Claim type: observed
 
 ### Claim
 
-The final comparison must use the Agentlas meta-agent repo-generation path, not direct model answers.
+The final comparison must use the Agentlas agent-team repo-generation path, not direct model answers.
 
 ### Evidence
 
-The runner calls the Agentlas answer-aware team draft path with an empty question set, then exports the generated draft repo and scores the extracted artifacts. Upstage `solar-pro2` and Gemini CLI `gemini-3-flash-preview` completed all 10 prompts with reviewed averages of 90/100. Codex CLI `gpt-5.5` completed 7 of 10 and averaged 63/100 after failed cases were kept at 0. Claude Code timed out across the full sweep. Antigravity returned no stdout and could not be consumed by Agentlas.
+The runner calls the Agentlas answer-aware team draft path with an empty question set, then exports the generated draft repo and scores the extracted artifacts. The initial short-timeout sweep was later superseded by a 900s per-case run; the short run incorrectly classified slower providers as quality failures.
 
 ### Interpretation
 
-Upstage and Gemini were tied on reviewed quality, but Upstage was much faster in this run. Codex quality was competitive when it completed, but reliability was lower. Claude and Antigravity failed operationally under the Agentlas CLI-provider contract.
+Under the long-timeout public aggregate, Claude, Codex, and Gemini 3.1 tied at 96.0, while Solar Pro 2 reached 95.9 with the best speed/cost proxy. Antigravity remained a stdout-contract failure.
 
 ### Scorer Review
 

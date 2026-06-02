@@ -1,0 +1,139 @@
+{
+  "name": "Film Studio Production OS",
+  "tagline": "Turns a story brief into script, storyboard, budget, schedule, and post-production packages.",
+  "category": "creative",
+  "orchestrator": {
+    "role": "Producer HQ",
+    "job": "Routes creative, production, budget, legal, and post work while gating shoot, contract, and release decisions."
+  },
+  "agents": [
+    {
+      "role": "Story Developer",
+      "job": "Expands premise into beat sheet, character arcs, and script risks.",
+      "skills": [
+        "story-developer",
+        "handoff-contract",
+        "quality-check"
+      ],
+      "modelTier": "standard",
+      "externalApis": [],
+      "deliverables": [
+        "Expands premise into beat sheet, character arcs, and script risks"
+      ]
+    },
+    {
+      "role": "Storyboard Director",
+      "job": "Converts scenes into shot lists and visual boards.",
+      "skills": [
+        "storyboard-director",
+        "handoff-contract",
+        "quality-check"
+      ],
+      "modelTier": "premium",
+      "externalApis": [],
+      "deliverables": [
+        "Converts scenes into shot lists and visual boards"
+      ]
+    },
+    {
+      "role": "Production Scheduler",
+      "job": "Builds location, cast, crew, and shoot schedules.",
+      "skills": [
+        "production-scheduler",
+        "handoff-contract",
+        "quality-check"
+      ],
+      "modelTier": "standard",
+      "externalApis": [],
+      "deliverables": [
+        "Builds location, cast, crew, and shoot schedules"
+      ]
+    },
+    {
+      "role": "Budget & Legal Reviewer",
+      "job": "Checks budget, rights, music, talent, and release constraints.",
+      "skills": [
+        "budget-&-legal-reviewer",
+        "handoff-contract",
+        "quality-check"
+      ],
+      "modelTier": "premium",
+      "externalApis": [],
+      "deliverables": [
+        "Checks budget, rights, music, talent, and release constraints"
+      ]
+    },
+    {
+      "role": "Post Pipeline Manager",
+      "job": "Plans edit, VFX, sound, color, and delivery milestones.",
+      "skills": [
+        "post-pipeline-manager",
+        "handoff-contract",
+        "quality-check"
+      ],
+      "modelTier": "standard",
+      "externalApis": [],
+      "deliverables": [
+        "Plans edit, VFX, sound, color, and delivery milestones"
+      ]
+    }
+  ],
+  "edges": [
+    {
+      "from": "Producer HQ",
+      "to": "Story Developer",
+      "handoff": "Goal and input scope"
+    },
+    {
+      "from": "Story Developer",
+      "to": "Storyboard Director",
+      "handoff": "First-pass analysis"
+    },
+    {
+      "from": "Storyboard Director",
+      "to": "Production Scheduler",
+      "handoff": "Draft plan or asset"
+    },
+    {
+      "from": "Production Scheduler",
+      "to": "Budget & Legal Reviewer",
+      "handoff": "Review target"
+    },
+    {
+      "from": "Budget & Legal Reviewer",
+      "to": "Post Pipeline Manager",
+      "handoff": "Approved package"
+    }
+  ],
+  "reviewGates": [
+    "User approval before external send/delete/payment/execution",
+    "Record sources and rationale",
+    "Never print private data or secrets",
+    "Fall back to safe local drafts on failure"
+  ],
+  "costGuardrails": [
+    "Use standard or lower for collection and cleanup",
+    "Premium only for difficult judgment",
+    "Block repeated runs on same input",
+    "Cap retry count"
+  ],
+  "selfImprovement": "Logs run outcomes, failure causes, and user edits into a memory ledger, then updates checklists and eval criteria.",
+  "creditBand": "medium",
+  "userSetup": [
+    "Enter story brief",
+    "Set budget cap and shooting window",
+    "Assign rights/music/talent approvers",
+    "Choose delivery format"
+  ],
+  "slug": "benchmark-film-studio-production-os",
+  "benchmark": {
+    "source": "agentlas-model-benchmark-long-timeout",
+    "promptId": "P04",
+    "promptName": "P04_FILM_STUDIO_AGENT",
+    "selectionRule": "highest score, shortest wall time as tie-breaker",
+    "selectedRuntime": "agentlas_upstage",
+    "selectedModel": "solar-pro2",
+    "score100": 96.0,
+    "wallTimeSeconds": 8.204
+  }
+}

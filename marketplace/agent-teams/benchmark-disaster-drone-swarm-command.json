@@ -1,0 +1,156 @@
+{
+  "name": "재난 드론 군집 지휘팀",
+  "tagline": "지도, 날씨, 배터리, 통신 상태를 보며 수색·정찰 드론 임무를 안전 게이트 안에서 조율합니다.",
+  "category": "emergency",
+  "orchestrator": {
+    "role": "현장 임무 HQ",
+    "job": "사람 구조와 안전을 최우선으로 임무 구역, 드론 역할, 비행 제한, 승인 게이트를 관리한다. 자동 비행 명령은 승인 전 차단한다."
+  },
+  "agents": [
+    {
+      "role": "상황 지도 분석관",
+      "job": "재난 구역, 장애물, 금지 구역, 우선 수색 영역을 지도화한다.",
+      "skills": [
+        "gis-mapping",
+        "hazard-zoning",
+        "priority-grid"
+      ],
+      "modelTier": "standard",
+      "externalApis": [
+        "GIS map API"
+      ],
+      "deliverables": [
+        "작전 지도",
+        "위험 구역"
+      ]
+    },
+    {
+      "role": "군집 임무 플래너",
+      "job": "드론별 탐색 경로, 고도, 임무 순서를 계획한다.",
+      "skills": [
+        "swarm-routing",
+        "coverage-planning",
+        "battery-aware-scheduling"
+      ],
+      "modelTier": "premium",
+      "externalApis": [
+        "Drone fleet API"
+      ],
+      "deliverables": [
+        "비행 계획",
+        "배터리별 임무표"
+      ]
+    },
+    {
+      "role": "텔레메트리 모니터",
+      "job": "배터리, 위치, 링크 품질, 충돌 위험을 실시간으로 감시한다.",
+      "skills": [
+        "telemetry-watch",
+        "collision-risk",
+        "fallback-trigger"
+      ],
+      "modelTier": "standard",
+      "externalApis": [
+        "Drone telemetry"
+      ],
+      "deliverables": [
+        "상태 대시보드",
+        "비상 알림"
+      ]
+    },
+    {
+      "role": "영상·센서 판독관",
+      "job": "영상, 열화상, 센서 값을 구조 신호와 위험 신호로 분류한다.",
+      "skills": [
+        "vision-review",
+        "thermal-detection",
+        "confidence-labeling"
+      ],
+      "modelTier": "premium",
+      "externalApis": [
+        "Video stream",
+        "Thermal sensor"
+      ],
+      "deliverables": [
+        "후보 구조 지점",
+        "신뢰도 표"
+      ]
+    },
+    {
+      "role": "안전 승인관",
+      "job": "비행 금지, 사람 밀집, 날씨 악화, 배터리 위험을 최종 차단한다.",
+      "skills": [
+        "safety-gate",
+        "airspace-check",
+        "human-approval"
+      ],
+      "modelTier": "standard",
+      "externalApis": [
+        "Weather API",
+        "Airspace data"
+      ],
+      "deliverables": [
+        "승인/중지 판정",
+        "안전 로그"
+      ]
+    }
+  ],
+  "edges": [
+    {
+      "from": "현장 임무 HQ",
+      "to": "상황 지도 분석관",
+      "handoff": "구역과 목표"
+    },
+    {
+      "from": "상황 지도 분석관",
+      "to": "군집 임무 플래너",
+      "handoff": "지도 격자와 위험 구역"
+    },
+    {
+      "from": "군집 임무 플래너",
+      "to": "안전 승인관",
+      "handoff": "비행 계획"
+    },
+    {
+      "from": "안전 승인관",
+      "to": "텔레메트리 모니터",
+      "handoff": "승인된 임무"
+    },
+    {
+      "from": "텔레메트리 모니터",
+      "to": "영상·센서 판독관",
+      "handoff": "실시간 영상·센서 패킷"
+    }
+  ],
+  "reviewGates": [
+    "비행 명령 전 현장 책임자 승인",
+    "비행 금지구역·날씨 위험 차단",
+    "충돌·배터리 임계치 시 즉시 귀환",
+    "사람 위치 정보 최소화"
+  ],
+  "costGuardrails": [
+    "지도·상태 감시는 standard",
+    "영상 판독과 군집 최적화만 premium",
+    "중복 영상 프레임 샘플링",
+    "임무 변경은 이벤트 기반"
+  ],
+  "selfImprovement": "임무 후 실제 커버리지, 오탐 구조 지점, 배터리 예측 오류를 기록해 다음 경로 계획을 보정한다.",
+  "creditBand": "high",
+  "userSetup": [
+    "드론 fleet API 연결",
+    "지도/날씨/공역 데이터 연결",
+    "승인 책임자 지정",
+    "비행 금지 정책 입력"
+  ],
+  "slug": "benchmark-disaster-drone-swarm-command",
+  "benchmark": {
+    "source": "agentlas-model-benchmark-long-timeout",
+    "promptId": "P03",
+    "promptName": "P03_DISASTER_DRONE_SWARM_AGENT",
+    "selectionRule": "highest score, shortest wall time as tie-breaker",
+    "selectedRuntime": "agentlas_upstage",
+    "selectedModel": "solar-pro2",
+    "score100": 98.0,
+    "wallTimeSeconds": 10.381
+  }
+}

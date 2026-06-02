@@ -28,5 +28,6 @@ check_pattern "Upstage API token" 'up_[A-Za-z0-9_-]{20,}'
 check_pattern "Google API key" 'AIza[0-9A-Za-z_-]{20,}'
 check_pattern "private key block" 'BEGIN (RSA|OPENSSH|EC|DSA) PRIVATE KEY'
 check_pattern "service account material" 'firebase-adminsdk|serviceAccountKey|client_email.*gserviceaccount'
+check_pattern "private internal capability label" 'meta-agent|Meta-Agent|메타 에이전트|P10_META|META_AGENT_FACTORY|src/lib/draft/meta-agent'
 
 echo "Public safety check passed."

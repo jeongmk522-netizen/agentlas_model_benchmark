@@ -1,0 +1,139 @@
+{
+  "name": "병원 운영 커맨드 센터",
+  "tagline": "예약, 병상·인력 배정, 환자 흐름, 청구 지원, 임상 행정 문서를 개인정보 보호 안에서 조율합니다.",
+  "category": "healthcare",
+  "orchestrator": {
+    "role": "병원 운영 HQ",
+    "job": "운영 병목을 감지하고 예약, 자원, 환자 흐름, 청구, 문서화 팀에 일을 나누며 PHI 접근을 최소화한다."
+  },
+  "agents": [
+    {
+      "role": "예약 코디네이터",
+      "job": "예약 슬롯, 노쇼, 의료진 캘린더를 조율합니다.",
+      "skills": [
+        "scheduling-coordinator",
+        "handoff-contract",
+        "quality-check"
+      ],
+      "modelTier": "standard",
+      "externalApis": [],
+      "deliverables": [
+        "예약 슬롯, 노쇼, 의료진 캘린더를 조율합니다"
+      ]
+    },
+    {
+      "role": "자원 플래너",
+      "job": "병상, 방, 인력, 장비 제약을 추적합니다.",
+      "skills": [
+        "resource-planner",
+        "handoff-contract",
+        "quality-check"
+      ],
+      "modelTier": "premium",
+      "externalApis": [],
+      "deliverables": [
+        "병상, 방, 인력, 장비 제약을 추적합니다"
+      ]
+    },
+    {
+      "role": "환자 흐름 분석가",
+      "job": "접수부터 퇴원까지 병목을 찾습니다.",
+      "skills": [
+        "patient-flow-analyst",
+        "handoff-contract",
+        "quality-check"
+      ],
+      "modelTier": "standard",
+      "externalApis": [],
+      "deliverables": [
+        "접수부터 퇴원까지 병목을 찾습니다"
+      ]
+    },
+    {
+      "role": "청구 지원 분석가",
+      "job": "코딩과 청구 근거를 검토용으로 준비합니다.",
+      "skills": [
+        "claims-support-analyst",
+        "handoff-contract",
+        "quality-check"
+      ],
+      "modelTier": "premium",
+      "externalApis": [],
+      "deliverables": [
+        "코딩과 청구 근거를 검토용으로 준비합니다"
+      ]
+    },
+    {
+      "role": "개인정보·임상 행정 게이트",
+      "job": "PHI 최소화, 동의, 임상 기록 안전성을 점검합니다.",
+      "skills": [
+        "privacy-&-clinical-admin-gate",
+        "handoff-contract",
+        "quality-check"
+      ],
+      "modelTier": "standard",
+      "externalApis": [],
+      "deliverables": [
+        "PHI 최소화, 동의, 임상 기록 안전성을 점검합니다"
+      ]
+    }
+  ],
+  "edges": [
+    {
+      "from": "병원 운영 HQ",
+      "to": "예약 코디네이터",
+      "handoff": "목표와 입력 범위"
+    },
+    {
+      "from": "예약 코디네이터",
+      "to": "자원 플래너",
+      "handoff": "1차 분석 결과"
+    },
+    {
+      "from": "자원 플래너",
+      "to": "환자 흐름 분석가",
+      "handoff": "설계/제작 초안"
+    },
+    {
+      "from": "환자 흐름 분석가",
+      "to": "청구 지원 분석가",
+      "handoff": "검토 대상"
+    },
+    {
+      "from": "청구 지원 분석가",
+      "to": "개인정보·임상 행정 게이트",
+      "handoff": "승인된 패키지"
+    }
+  ],
+  "reviewGates": [
+    "외부 전송·삭제·결제·실행 전 사용자 승인",
+    "출처와 판단 근거 기록",
+    "개인정보·비밀값 출력 금지",
+    "실패 시 안전한 로컬 초안으로 대체"
+  ],
+  "costGuardrails": [
+    "수집·정리는 standard 이하",
+    "고난도 판단만 premium",
+    "동일 입력 반복 실행 차단",
+    "실패 재시도 횟수 제한"
+  ],
+  "selfImprovement": "실행 결과, 실패 원인, 사용자 수정 사항을 메모리 레저에 기록해 다음 체크리스트와 평가 기준을 갱신한다.",
+  "creditBand": "high",
+  "userSetup": [
+    "예약/EMR 읽기 권한 연결",
+    "PHI 접근 정책 입력",
+    "운영 KPI 선택",
+    "임상 승인자 지정"
+  ],
+  "slug": "benchmark-hospital-operations-command-center",
+  "benchmark": {
+    "source": "agentlas-model-benchmark-long-timeout",
+    "promptId": "P07",
+    "promptName": "P07_HOSPITAL_OPERATIONS_AGENT",
+    "selectionRule": "highest score, shortest wall time as tie-breaker",
+    "selectedRuntime": "agentlas_upstage",
+    "selectedModel": "solar-pro2",
+    "score100": 96.0,
+    "wallTimeSeconds": 9.877
+  }
+}

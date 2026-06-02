@@ -1,0 +1,139 @@
+{
+  "name": "공급망 컨트롤 타워",
+  "tagline": "수요 예측, 재고, 공급업체 리스크, 물류 지연, 사고 대응을 하나의 운영 타워에서 조율합니다.",
+  "category": "supply_chain",
+  "orchestrator": {
+    "role": "운영 타워 HQ",
+    "job": "재고와 수요 변동, 공급업체 이슈, 물류 지연을 감지해 계획·위험·대응 팀에 라우팅한다."
+  },
+  "agents": [
+    {
+      "role": "수요 예측관",
+      "job": "판매, 계절성, 프로모션 신호로 수요를 예측합니다.",
+      "skills": [
+        "demand-forecaster",
+        "handoff-contract",
+        "quality-check"
+      ],
+      "modelTier": "standard",
+      "externalApis": [],
+      "deliverables": [
+        "판매, 계절성, 프로모션 신호로 수요를 예측합니다"
+      ]
+    },
+    {
+      "role": "재고 플래너",
+      "job": "품절, 과잉재고, 재주문점, 배분을 점검합니다.",
+      "skills": [
+        "inventory-planner",
+        "handoff-contract",
+        "quality-check"
+      ],
+      "modelTier": "premium",
+      "externalApis": [],
+      "deliverables": [
+        "품절, 과잉재고, 재주문점, 배분을 점검합니다"
+      ]
+    },
+    {
+      "role": "공급업체 리스크 분석가",
+      "job": "업체 성과, 지정학 리스크, 생산 여력을 감시합니다.",
+      "skills": [
+        "supplier-risk-analyst",
+        "handoff-contract",
+        "quality-check"
+      ],
+      "modelTier": "standard",
+      "externalApis": [],
+      "deliverables": [
+        "업체 성과, 지정학 리스크, 생산 여력을 감시합니다"
+      ]
+    },
+    {
+      "role": "물류 모니터",
+      "job": "배송, ETA, 통관, 운송 예외를 추적합니다.",
+      "skills": [
+        "logistics-monitor",
+        "handoff-contract",
+        "quality-check"
+      ],
+      "modelTier": "premium",
+      "externalApis": [],
+      "deliverables": [
+        "배송, ETA, 통관, 운송 예외를 추적합니다"
+      ]
+    },
+    {
+      "role": "사고 대응 플래너",
+      "job": "완화 옵션과 승인 가능한 대응 계획을 만듭니다.",
+      "skills": [
+        "incident-response-planner",
+        "handoff-contract",
+        "quality-check"
+      ],
+      "modelTier": "standard",
+      "externalApis": [],
+      "deliverables": [
+        "완화 옵션과 승인 가능한 대응 계획을 만듭니다"
+      ]
+    }
+  ],
+  "edges": [
+    {
+      "from": "운영 타워 HQ",
+      "to": "수요 예측관",
+      "handoff": "목표와 입력 범위"
+    },
+    {
+      "from": "수요 예측관",
+      "to": "재고 플래너",
+      "handoff": "1차 분석 결과"
+    },
+    {
+      "from": "재고 플래너",
+      "to": "공급업체 리스크 분석가",
+      "handoff": "설계/제작 초안"
+    },
+    {
+      "from": "공급업체 리스크 분석가",
+      "to": "물류 모니터",
+      "handoff": "검토 대상"
+    },
+    {
+      "from": "물류 모니터",
+      "to": "사고 대응 플래너",
+      "handoff": "승인된 패키지"
+    }
+  ],
+  "reviewGates": [
+    "외부 전송·삭제·결제·실행 전 사용자 승인",
+    "출처와 판단 근거 기록",
+    "개인정보·비밀값 출력 금지",
+    "실패 시 안전한 로컬 초안으로 대체"
+  ],
+  "costGuardrails": [
+    "수집·정리는 standard 이하",
+    "고난도 판단만 premium",
+    "동일 입력 반복 실행 차단",
+    "실패 재시도 횟수 제한"
+  ],
+  "selfImprovement": "실행 결과, 실패 원인, 사용자 수정 사항을 메모리 레저에 기록해 다음 체크리스트와 평가 기준을 갱신한다.",
+  "creditBand": "medium",
+  "userSetup": [
+    "ERP/재고 데이터 연결",
+    "물류 추적 API 연결",
+    "위험 임계치 입력",
+    "승인 가능한 대응 범위 설정"
+  ],
+  "slug": "benchmark-supply-chain-control-tower",
+  "benchmark": {
+    "source": "agentlas-model-benchmark-long-timeout",
+    "promptId": "P08",
+    "promptName": "P08_SUPPLY_CHAIN_CONTROL_TOWER_AGENT",
+    "selectionRule": "highest score, shortest wall time as tie-breaker",
+    "selectedRuntime": "agentlas_upstage",
+    "selectedModel": "solar-pro2",
+    "score100": 96.0,
+    "wallTimeSeconds": 9.774
+  }
+}

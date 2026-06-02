@@ -1,0 +1,139 @@
+{
+  "name": "Supply Chain Control Tower",
+  "tagline": "Coordinates demand forecasting, inventory, supplier risk, logistics delays, and incident response in one operating tower.",
+  "category": "supply_chain",
+  "orchestrator": {
+    "role": "Operations Tower HQ",
+    "job": "Detects inventory, demand, supplier, and logistics changes, then routes planning, risk, and response work."
+  },
+  "agents": [
+    {
+      "role": "Demand Forecaster",
+      "job": "Builds forecasts from sales, seasonality, and promotion signals.",
+      "skills": [
+        "demand-forecaster",
+        "handoff-contract",
+        "quality-check"
+      ],
+      "modelTier": "standard",
+      "externalApis": [],
+      "deliverables": [
+        "Builds forecasts from sales, seasonality, and promotion signals"
+      ]
+    },
+    {
+      "role": "Inventory Planner",
+      "job": "Checks stockouts, overstock, reorder points, and allocation.",
+      "skills": [
+        "inventory-planner",
+        "handoff-contract",
+        "quality-check"
+      ],
+      "modelTier": "premium",
+      "externalApis": [],
+      "deliverables": [
+        "Checks stockouts, overstock, reorder points, and allocation"
+      ]
+    },
+    {
+      "role": "Supplier Risk Analyst",
+      "job": "Monitors vendor performance, geopolitical risk, and capacity.",
+      "skills": [
+        "supplier-risk-analyst",
+        "handoff-contract",
+        "quality-check"
+      ],
+      "modelTier": "standard",
+      "externalApis": [],
+      "deliverables": [
+        "Monitors vendor performance, geopolitical risk, and capacity"
+      ]
+    },
+    {
+      "role": "Logistics Monitor",
+      "job": "Tracks shipments, ETAs, customs, and carrier exceptions.",
+      "skills": [
+        "logistics-monitor",
+        "handoff-contract",
+        "quality-check"
+      ],
+      "modelTier": "premium",
+      "externalApis": [],
+      "deliverables": [
+        "Tracks shipments, ETAs, customs, and carrier exceptions"
+      ]
+    },
+    {
+      "role": "Incident Response Planner",
+      "job": "Builds mitigation options and approval-ready response plans.",
+      "skills": [
+        "incident-response-planner",
+        "handoff-contract",
+        "quality-check"
+      ],
+      "modelTier": "standard",
+      "externalApis": [],
+      "deliverables": [
+        "Builds mitigation options and approval-ready response plans"
+      ]
+    }
+  ],
+  "edges": [
+    {
+      "from": "Operations Tower HQ",
+      "to": "Demand Forecaster",
+      "handoff": "Goal and input scope"
+    },
+    {
+      "from": "Demand Forecaster",
+      "to": "Inventory Planner",
+      "handoff": "First-pass analysis"
+    },
+    {
+      "from": "Inventory Planner",
+      "to": "Supplier Risk Analyst",
+      "handoff": "Draft plan or asset"
+    },
+    {
+      "from": "Supplier Risk Analyst",
+      "to": "Logistics Monitor",
+      "handoff": "Review target"
+    },
+    {
+      "from": "Logistics Monitor",
+      "to": "Incident Response Planner",
+      "handoff": "Approved package"
+    }
+  ],
+  "reviewGates": [
+    "User approval before external send/delete/payment/execution",
+    "Record sources and rationale",
+    "Never print private data or secrets",
+    "Fall back to safe local drafts on failure"
+  ],
+  "costGuardrails": [
+    "Use standard or lower for collection and cleanup",
+    "Premium only for difficult judgment",
+    "Block repeated runs on same input",
+    "Cap retry count"
+  ],
+  "selfImprovement": "Logs run outcomes, failure causes, and user edits into a memory ledger, then updates checklists and eval criteria.",
+  "creditBand": "medium",
+  "userSetup": [
+    "Connect ERP/inventory data",
+    "Connect logistics tracking API",
+    "Enter risk thresholds",
+    "Set approved response boundaries"
+  ],
+  "slug": "benchmark-supply-chain-control-tower",
+  "benchmark": {
+    "source": "agentlas-model-benchmark-long-timeout",
+    "promptId": "P08",
+    "promptName": "P08_SUPPLY_CHAIN_CONTROL_TOWER_AGENT",
+    "selectionRule": "highest score, shortest wall time as tie-breaker",
+    "selectedRuntime": "agentlas_upstage",
+    "selectedModel": "solar-pro2",
+    "score100": 96.0,
+    "wallTimeSeconds": 9.774
+  }
+}

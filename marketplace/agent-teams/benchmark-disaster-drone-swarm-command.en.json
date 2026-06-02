@@ -1,0 +1,156 @@
+{
+  "name": "Disaster Drone Swarm Command",
+  "tagline": "Coordinates search and reconnaissance drones using maps, weather, batteries, and telemetry inside strict safety gates.",
+  "category": "emergency",
+  "orchestrator": {
+    "role": "Field Mission HQ",
+    "job": "Prioritizes human safety while managing mission areas, drone roles, flight restrictions, and approval gates. Blocks automated flight commands until approval."
+  },
+  "agents": [
+    {
+      "role": "Situation Map Analyst",
+      "job": "Maps disaster zones, obstacles, no-fly areas, and priority search regions.",
+      "skills": [
+        "gis-mapping",
+        "hazard-zoning",
+        "priority-grid"
+      ],
+      "modelTier": "standard",
+      "externalApis": [
+        "GIS map API"
+      ],
+      "deliverables": [
+        "Operations map",
+        "Hazard zones"
+      ]
+    },
+    {
+      "role": "Swarm Mission Planner",
+      "job": "Plans route, altitude, and sequence for each drone.",
+      "skills": [
+        "swarm-routing",
+        "coverage-planning",
+        "battery-aware-scheduling"
+      ],
+      "modelTier": "premium",
+      "externalApis": [
+        "Drone fleet API"
+      ],
+      "deliverables": [
+        "Flight plan",
+        "Battery-aware mission sheet"
+      ]
+    },
+    {
+      "role": "Telemetry Monitor",
+      "job": "Watches battery, position, link quality, and collision risk in real time.",
+      "skills": [
+        "telemetry-watch",
+        "collision-risk",
+        "fallback-trigger"
+      ],
+      "modelTier": "standard",
+      "externalApis": [
+        "Drone telemetry"
+      ],
+      "deliverables": [
+        "Status dashboard",
+        "Emergency alerts"
+      ]
+    },
+    {
+      "role": "Video & Sensor Interpreter",
+      "job": "Classifies video, thermal, and sensor signals into rescue leads and hazards.",
+      "skills": [
+        "vision-review",
+        "thermal-detection",
+        "confidence-labeling"
+      ],
+      "modelTier": "premium",
+      "externalApis": [
+        "Video stream",
+        "Thermal sensor"
+      ],
+      "deliverables": [
+        "Candidate rescue points",
+        "Confidence table"
+      ]
+    },
+    {
+      "role": "Safety Approval Officer",
+      "job": "Blocks no-fly, crowd, weather, and battery hazards.",
+      "skills": [
+        "safety-gate",
+        "airspace-check",
+        "human-approval"
+      ],
+      "modelTier": "standard",
+      "externalApis": [
+        "Weather API",
+        "Airspace data"
+      ],
+      "deliverables": [
+        "Approve/stop verdict",
+        "Safety log"
+      ]
+    }
+  ],
+  "edges": [
+    {
+      "from": "Field Mission HQ",
+      "to": "Situation Map Analyst",
+      "handoff": "Area and mission objective"
+    },
+    {
+      "from": "Situation Map Analyst",
+      "to": "Swarm Mission Planner",
+      "handoff": "Grid and hazard map"
+    },
+    {
+      "from": "Swarm Mission Planner",
+      "to": "Safety Approval Officer",
+      "handoff": "Flight plan"
+    },
+    {
+      "from": "Safety Approval Officer",
+      "to": "Telemetry Monitor",
+      "handoff": "Approved mission"
+    },
+    {
+      "from": "Telemetry Monitor",
+      "to": "Video & Sensor Interpreter",
+      "handoff": "Live sensor packets"
+    }
+  ],
+  "reviewGates": [
+    "Field commander approval before flight commands",
+    "Block no-fly and weather hazards",
+    "Immediate return on collision or battery thresholds",
+    "Minimize person-location data"
+  ],
+  "costGuardrails": [
+    "Standard tier for maps and state monitoring",
+    "Premium only for vision and swarm optimization",
+    "Sample duplicate video frames",
+    "Event-based mission replanning"
+  ],
+  "selfImprovement": "After each mission, logs coverage, false rescue leads, and battery forecast errors to improve future routing.",
+  "creditBand": "high",
+  "userSetup": [
+    "Connect drone fleet API",
+    "Connect map/weather/airspace feeds",
+    "Assign approval owner",
+    "Enter no-fly policy"
+  ],
+  "slug": "benchmark-disaster-drone-swarm-command",
+  "benchmark": {
+    "source": "agentlas-model-benchmark-long-timeout",
+    "promptId": "P03",
+    "promptName": "P03_DISASTER_DRONE_SWARM_AGENT",
+    "selectionRule": "highest score, shortest wall time as tie-breaker",
+    "selectedRuntime": "agentlas_upstage",
+    "selectedModel": "solar-pro2",
+    "score100": 98.0,
+    "wallTimeSeconds": 10.381
+  }
+}

@@ -4,7 +4,7 @@ This is a public Agentlas output repo for model/runtime benchmark research.
 
 ## Mission
 
-Help run and publish a reproducible benchmark for meta-agent OS generation. The benchmark asks whether a runtime can design installable systems with dynamic tool discovery, memory policy, hook lifecycle, state machines, governance, evals, and operational controls.
+Help run and publish a reproducible benchmark for agent-team OS generation. The benchmark asks whether a runtime can design installable systems with dynamic tool discovery, memory policy, hook lifecycle, state machines, governance, evals, and operational controls.
 
 ## Rules
 

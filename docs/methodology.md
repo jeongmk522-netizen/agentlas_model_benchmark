@@ -5,7 +5,7 @@ Claim type: observed benchmark execution
 
 ## Goal
 
-This benchmark evaluates whether a model/runtime can drive the Agentlas meta-agent pipeline to produce an installable meta-agent operating system. The target output is not an org chart or raw Markdown answer. A strong run must generate an Agentlas draft, export a repo, pass readiness checks, and include dynamic tool discovery, context engineering, permissioned routing, state machines, tests, red-team probes, observability, and cost controls.
+This benchmark evaluates whether a model/runtime can produce an installable Agentlas agent-team operating system for complex public workflows. The target output is not an org chart or raw Markdown answer. A strong run must generate an Agentlas draft, export a repo, pass readiness checks, and include tool discovery, evidence memory, permissioned routing, state machines, tests, adversarial probes, observability, and cost controls.
 
 ## Runtime Separation
 
@@ -17,7 +17,11 @@ The final comparison treats each runtime as part of the Agentlas provider path:
 | Custom CLI provider | Upstage `solar-pro2` wrapper | Measures a non-native provider through `AGENTLAS_LLM_CLI_COMMAND`. |
 | Headless agent shell | Antigravity CLI wrapper | Measures whether an IDE-like agent shell can return stdout for Agentlas consumption. |
 
-The earlier direct Upstage API run is historical baseline only. It should not be merged with the final Agentlas meta-agent results.
+The earlier direct Upstage API run is historical baseline only. It should not be merged with the final Agentlas export-path results.
+
+## Timeout Contract
+
+The current headline result uses a 900,000ms per-case timeout for public Agentlas exports. Shorter 60-180s runs are preserved only as historical harness diagnostics because they incorrectly classified slower providers as model-quality failures. In the current interpretation, deterministic fallbacks score 0, but a provider is not judged on quality until it has enough time to return an LLM-generated draft.
 
 ## Prompt Contract
 
@@ -33,7 +37,7 @@ The common prefix forbids local file inspection, asks the model to make assumpti
 
 ## Output Contract
 
-Raw Agentlas meta-agent runs are written outside the repo by default:
+Raw Agentlas runs are written outside the repo by default:
 
 ```text
 <raw-run-dir>/<runtime>_<model>_direct-draft/Pxx/
@@ -49,22 +53,33 @@ The public repo stores score tables and reports. Raw generated repos stay outsid
 
 ## Scoring
 
-The rubric totals 100 points:
+The current long-timeout aggregate uses an 8-axis, 100-point scenario rubric:
 
 | Dimension | Points |
 |-----------|--------|
-| Mission topology and ownership | 10 |
-| Dynamic tool discovery and routing | 12 |
-| Hook lifecycle and automation architecture | 8 |
-| Context engineering and memory | 14 |
-| Workflow state machine and handoffs | 12 |
-| Domain-specific depth | 10 |
-| Governance, safety, and human approval | 12 |
-| Evaluation, smoke tests, and red-team tests | 10 |
-| Observability, cost, and operational controls | 8 |
-| Installability and artifact quality | 4 |
+| Request fit and domain depth | 15 |
+| Agentlas team structure | 15 |
+| Dynamic tools and credential setup | 15 |
+| Memory and context handling | 12 |
+| Workflow handoffs | 12 |
+| Runnable installability | 10 |
+| Governance and safety | 10 |
+| Observability and cost control | 11 |
 
-Final raw verdicts are capped at `Not production-grade` if any required red flag appears, even when the numeric score is high. The reviewed aggregate may correct narrow phrase-based false positives when score evidence already proves the required workflow/gate/domain signal exists. Failed LLM runs stay 0 even if Agentlas deterministic fallback creates a draft.
+Final raw verdicts are capped at `Not production-grade` if any required red flag appears, even when the numeric score is high. Failed LLM runs stay 0 even if Agentlas deterministic fallback creates a draft.
+
+Older raw Agentlas summary files used a 10-item readiness scorer. The current published aggregate is `data/evaluations/agentlas_meta_long_timeout_summary.*` and the `agentlas_meta_reviewed_*` alias files. Non-public cases are excluded from these public aggregate files.
+
+## Token and Cost Method
+
+The CLI provider path does not expose exact billable provider tokens for every runtime. Agentlas currently records observed prompt/response character counts for these runs. Public cost tables therefore use:
+
+```text
+estimated_tokens = observed_character_units / 4
+estimated_cost = estimated_input_tokens * input_price + estimated_output_tokens * output_price
+```
+
+Prices are public API list prices as of 2026-06-02. These estimates are useful for relative comparison, not billing reconciliation.
 
 ## Metadata
 

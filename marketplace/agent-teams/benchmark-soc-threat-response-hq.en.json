@@ -1,0 +1,139 @@
+{
+  "name": "SOC Threat Response HQ",
+  "tagline": "Coordinates SIEM alerts, logs, threat intel, MITRE mapping, containment approval, and post-incident reporting.",
+  "category": "security",
+  "orchestrator": {
+    "role": "Incident Commander HQ",
+    "job": "Triage alerts and routes log investigation, threat intel, detection rules, containment plans, and reports. Blocks containment actions before approval."
+  },
+  "agents": [
+    {
+      "role": "Alert Triage Analyst",
+      "job": "Ranks alerts by severity, asset criticality, and confidence.",
+      "skills": [
+        "alert-triage-analyst",
+        "handoff-contract",
+        "quality-check"
+      ],
+      "modelTier": "standard",
+      "externalApis": [],
+      "deliverables": [
+        "Ranks alerts by severity, asset criticality, and confidence"
+      ]
+    },
+    {
+      "role": "Log Investigator",
+      "job": "Queries logs and reconstructs timeline and scope.",
+      "skills": [
+        "log-investigator",
+        "handoff-contract",
+        "quality-check"
+      ],
+      "modelTier": "premium",
+      "externalApis": [],
+      "deliverables": [
+        "Queries logs and reconstructs timeline and scope"
+      ]
+    },
+    {
+      "role": "Threat Intel Mapper",
+      "job": "Maps indicators to MITRE techniques and known campaigns.",
+      "skills": [
+        "threat-intel-mapper",
+        "handoff-contract",
+        "quality-check"
+      ],
+      "modelTier": "standard",
+      "externalApis": [],
+      "deliverables": [
+        "Maps indicators to MITRE techniques and known campaigns"
+      ]
+    },
+    {
+      "role": "Containment Planner",
+      "job": "Drafts block, isolate, and rollback plans for approval.",
+      "skills": [
+        "containment-planner",
+        "handoff-contract",
+        "quality-check"
+      ],
+      "modelTier": "premium",
+      "externalApis": [],
+      "deliverables": [
+        "Drafts block, isolate, and rollback plans for approval"
+      ]
+    },
+    {
+      "role": "Detection Engineer",
+      "job": "Writes detection/rule updates and regression checks.",
+      "skills": [
+        "detection-engineer",
+        "handoff-contract",
+        "quality-check"
+      ],
+      "modelTier": "standard",
+      "externalApis": [],
+      "deliverables": [
+        "Writes detection/rule updates and regression checks"
+      ]
+    }
+  ],
+  "edges": [
+    {
+      "from": "Incident Commander HQ",
+      "to": "Alert Triage Analyst",
+      "handoff": "Goal and input scope"
+    },
+    {
+      "from": "Alert Triage Analyst",
+      "to": "Log Investigator",
+      "handoff": "First-pass analysis"
+    },
+    {
+      "from": "Log Investigator",
+      "to": "Threat Intel Mapper",
+      "handoff": "Draft plan or asset"
+    },
+    {
+      "from": "Threat Intel Mapper",
+      "to": "Containment Planner",
+      "handoff": "Review target"
+    },
+    {
+      "from": "Containment Planner",
+      "to": "Detection Engineer",
+      "handoff": "Approved package"
+    }
+  ],
+  "reviewGates": [
+    "User approval before external send/delete/payment/execution",
+    "Record sources and rationale",
+    "Never print private data or secrets",
+    "Fall back to safe local drafts on failure"
+  ],
+  "costGuardrails": [
+    "Use standard or lower for collection and cleanup",
+    "Premium only for difficult judgment",
+    "Block repeated runs on same input",
+    "Cap retry count"
+  ],
+  "selfImprovement": "Logs run outcomes, failure causes, and user edits into a memory ledger, then updates checklists and eval criteria.",
+  "creditBand": "high",
+  "userSetup": [
+    "Connect SIEM/log read access",
+    "Define allowed containment actions",
+    "Choose threat intel sources",
+    "Set postmortem template"
+  ],
+  "slug": "benchmark-soc-threat-response-hq",
+  "benchmark": {
+    "source": "agentlas-model-benchmark-long-timeout",
+    "promptId": "P09",
+    "promptName": "P09_SOC_THREAT_RESPONSE_AGENT",
+    "selectionRule": "highest score, shortest wall time as tie-breaker",
+    "selectedRuntime": "agentlas_upstage",
+    "selectedModel": "solar-pro2",
+    "score100": 95.0,
+    "wallTimeSeconds": 9.999
+  }
+}

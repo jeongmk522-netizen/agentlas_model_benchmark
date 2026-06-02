@@ -169,7 +169,5 @@
       "pricing_source": "https://www.upstage.ai/pricing",
       "pricing_note": "Upstage Solar Pro 2 public pricing."
     }
-  ],
-  "aliasOf": "agentlas_meta_long_timeout_summary.json",
-  "reviewRule": "Long-timeout Agentlas public scenario exports; deterministic fallbacks score 0 and qualified LLM outputs use the 8-axis scenario rubric. Non-public cases are excluded."
+  ]
 }

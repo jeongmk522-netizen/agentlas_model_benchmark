@@ -22,7 +22,7 @@ python3 scripts/score_runs.py --runs-dir /tmp/test_agent/model_runs --out data/e
 
 ## Summary
 
-`solar-pro2` completed all 10 prompts successfully. The direct API baseline is consistently useful but not production-grade: it usually produces a folder tree, dynamic tool registry, memory scopes, approval gates, tests, and observability, but the details are shallow where real systems need precision.
+`solar-pro2` completed the public prompts successfully. The direct API baseline is consistently useful but not production-grade: it usually produces a folder tree, dynamic tool registry, memory scopes, approval gates, tests, and observability, but the details are shallow where real systems need precision. One non-public case from the original local run is excluded from this public note.
 
 The recurring gaps are hook lifecycle depth, idempotency and rollback behavior, handoff return contracts, memory promotion/demotion, source trust ranking, and concrete install manifests. No required red-flag ceiling was triggered in the reviewed outputs.
 
@@ -37,20 +37,17 @@ The recurring gaps are hook lifecycle depth, idempotency and rollback behavior, 
 | P07 | 72 | Promising but incomplete operating system | none | Governance Safety And Human Approval | Hook Lifecycle And Automation Architecture |
 | P08 | 75 | Promising but incomplete operating system | none | Domain-Specific Depth | Governance Safety And Human Approval |
 | P09 | 78 | Promising but incomplete operating system | none | Governance Safety And Human Approval | Observability Cost And Operational Controls |
-| P10 | 77 | Promising but incomplete operating system | none | Dynamic Tool Discovery And Routing | Observability Cost And Operational Controls |
 
 ## Aggregate Metrics
 
 | Metric | Value |
 |--------|-------|
-| Completed prompts | 10 / 10 |
-| Average score | 74.9 |
+| Completed public prompts | 9 / 9 |
+| Average score | 74.7 |
 | Score range | 71-79 |
 | Red-flag count | 0 |
 | Average wall time | 12.744 seconds |
-| Total input tokens | 2,851 |
-| Total output tokens | 19,146 |
-| Total tokens | 21,997 |
+| Token totals | See source CSV; non-public case excluded from this public note |
 | Cost | unavailable |
 
 ## Prompt-Level Notes
@@ -64,12 +61,11 @@ The recurring gaps are hook lifecycle depth, idempotency and rollback behavior, 
 - **P07 Hospital**: Strong PHI redaction, audit trail, stale-data detection, and human approval. Workflow state machine is weaker than other domains.
 - **P08 Supply Chain**: Good supply-chain KPIs, exception workflows, optimization loops, and KPI dashboard. It names example tools heavily, which slightly weakens the dynamic-tool claim.
 - **P09 SOC**: Strong SIEM/EDR routing, evidence graph, MITRE mapping, detection-as-code, containment approvals, and prompt-injection defenses. Observability remains brief.
-- **P10 Factory**: Strong role synthesis, tool discovery, capability mapping, hook generation, eval generation, sandbox policy, and continuous improvement memory. Domain examples are thinner than specialized prompts.
 
 ## Interim Answer To The Research Questions
 
 - **Domain-specific constraints**: strongest in P03, P07, and P09.
-- **Dynamic tool discovery**: consistently present, with strongest detail in P01, P02, P05, and P10.
+- **Dynamic tool discovery**: consistently present, with strongest detail in P01, P02, and P05.
 - **Context engineering**: consistently operational at the level of scopes, retrieval, compression, provenance, and stale detection; weaker on promotion/demotion, conflict resolution, and source trust ranking.
 - **Safety/governance misses**: no hard red flags, but permission models are often role-based sketches rather than enforceable policy contracts.
 - **Fast but shallow**: all runs were fast and compact; the speed likely contributes to shallow hook, install, and observability details.

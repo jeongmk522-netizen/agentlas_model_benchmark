@@ -1,6 +1,6 @@
 # Agentlas Model Benchmark Agent Instructions
 
-This is an Agentlas public output repository for benchmarking model/runtime ability to design installable meta-agent operating systems.
+This is an Agentlas public output repository for benchmarking model/runtime ability to design installable agent-team operating systems.
 
 ## Contract
 
