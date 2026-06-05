@@ -7,7 +7,7 @@
 <p align="center">
   <a href="https://agentlas.cloud">agentlas.cloud</a>
   ·
-  <a href="https://github.com/jeongmk522-netizen/Agentlas_public_repo">Lab Hub</a>
+  <a href="https://github.com/agentlas-ai">Lab Hub</a>
 </p>
 
 ## Abstract
